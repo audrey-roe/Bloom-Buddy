@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mchat.urls')),
+    # path('vidchat/', include('vidchat.urls')),
 ]

@@ -1,14 +1,15 @@
-from django.forms import ModelForm
-from .models import *
+from rest_framework import serializers
+
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
- 
-class createuserform(UserCreationForm):
+
+from .models import *
+
+class createuserserial(serializers.ModelSerializer):
     class Meta:
         model=info
         fields="__all__"
  
-class testform(ModelForm):
+class testformserial(serializers.ModelSerializer):
     class Meta:
         model=test
         fields="__all__"
