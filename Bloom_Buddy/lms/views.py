@@ -459,16 +459,16 @@ def add_time(request):
 def edit_time(request, id):
     if request.method == 'POST':
         time = timing.objects.get(id=id)
-        Edittimingform= timingserial(request.POST, instance=time)
-        if Edittimingform.is_valid():
-            Edittimingform.save()
+        Edittiming= timingserial(request.POST, instance=time)
+        if Edittiming.is_valid():
+            Edittiming.save()
         messages.success(request, "Timing Update Sucessfully !!")
         return redirect('alltime')
     else:
         time = timing.objects.get(id=id)
-        Edittimingform= timingserial(instance=time)   
+        Edittiming= timingserial(instance=time)   
 
-    return render(request, "admin/edit_time.html", {'time':Edittimingform})
+    return render(request, "admin/edit_time.html", {'time':Edittiming})
 
 def delete_time(request, id):
     delete = timing.objects.get(pk=id)  #pk means primary key
