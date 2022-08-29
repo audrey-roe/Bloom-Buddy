@@ -47,15 +47,12 @@ def home(request):
                 'main_course':main_course, 
                 'top_three_catg':top_three_catg, 
                 'catg':catg, 
-                'slider_post':slider_post, 
                 'latest_catg':latest_catg, 
                 'latest_post':latest_post, 
                 'totalposts':totalposts, 
                 # 'catg_parent':catg_parent,
                 'allcat':allcat, 
                 'categories':categories, 
-                'footcategories':footcategories, 
-                'rev':rev, 
                 'latest_catg_all':latest_catg_all
                 }
     return render(request, 'home.html', context)
@@ -170,7 +167,7 @@ def add_videos(request):
             video.save()
         messages.success(request, "video Added Sucessfully !!")    
         return redirect('home')
-    return render(request, "webadmin/addvideo.html", {'video':video})
+    return render(request, "admin/addvideo.html", {'video':video})
 
 def edit_videos(request, id):
     if request.method == 'POST':
@@ -184,7 +181,7 @@ def edit_videos(request, id):
         vid = video.objects.get(id=id)
         editvideoForm= videoserial(instance=vid)
 
-    return render(request, "webadmin/editvideo.html", {'editvideo':editvideoForm})
+    return render(request, "admin/editvideo.html", {'editvideo':editvideoForm})
 
 def delete_video(request, id):
     delete = video.objects.get(pk=id)  #pk means primary key
@@ -195,10 +192,10 @@ def delete_video(request, id):
 def allvideos(request):
     vid = video.objects.all()
     context = {'video':vid}
-    return render(request, 'webadmin/allvideo.html', context)
+    return render(request, 'admin/allvideo.html', context)
 
 def paid_video(request, slug):
     allpost = get_object_or_404(Post, slug=slug)
     vid = video.objects.filter(post=allpost)
     context = {'allpost':allpost, 'vid':vid}
-    return render(request, 'users/video.html', context)
+    return render(request, 'paidvideo.html', context)
