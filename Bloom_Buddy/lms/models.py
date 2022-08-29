@@ -194,5 +194,5 @@ class Order(models.Model):
         #     total -= self.coupon.amount    
         return total
 
-class messages():
-    pass
+# class messages():
+    # pass

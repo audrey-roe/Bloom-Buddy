@@ -124,38 +124,42 @@ class videoserial(serializers.ModelSerializers):
         model = video
         fields = '__all__'
 
-
+class subcatg(serializers.ModelSerializers):
+    
+    class Meta:
+        model = subcat
+        fields = '__all__'
     
 class leftmenu(serializers.ModelSerializers):
     class Meta:
         model = Category
-        exclude = ['top_three_cat', 'more']    
+        exclude = ['top_three_cat']    
 
 class middlemenu(serializers.ModelSerializers):
     class Meta:
         model = Category
-        exclude = ['parent', 'top_three_cat', 'logo1', 'logo2']    
+        exclude = ['parent', 'top_three_cat', ]    
 
 class rightmenu(serializers.ModelSerializers):
     class Meta:
         model = Category
-        exclude = ['parent', 'more', 'logo1', 'logo2']    
+        exclude = ['parent']    
 
-class admin_reviewsform(serializers.ModelSerializer):
+class admin_reviewserial(serializers.ModelSerializer):
 
     class Meta:
         model = Reviews
         fields = '__all__'          
 
 class checkoutserial(serializers.ModelSerializer):
-    #dunno what paystack will require
+    #dunno what paystack will require, just trying to be extensive
 
     mobile = serializers.IntegerField()        
     street_address = serializers.CharField()        
-    apartment_address = serializers.CharField(required=False)
+    state = serializers.CharField(required=False)
     country = serializers.CharField(label="Country")
-    zipcode = serializers.CharField()
-    same_billing_address = serializers.BooleanField(widget=serializers.CheckboxInput())
+    # zipcode = serializers.CharField()
+    billing_address = serializers.BooleanField(widget=serializers.CheckboxInput())
     save_info = serializers.BooleanField(widget=serializers.CheckboxInput())
     payment_option = serializers.BooleanField(widget=serializers.RadioSelect())         
 

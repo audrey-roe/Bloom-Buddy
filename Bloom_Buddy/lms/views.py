@@ -158,6 +158,247 @@ def verify_payment(request):
         except:
             return HttpResponse("Invalid Payment Details")    
 
+def logout(request):
+    request.session.clear()
+    return redirect('home')
+
+def userdashboard(request):
+    customer = Customer.objects.all()
+    carts = Cart.objects.filter(user=request.user, purchase=True)
+    orders = Order.objects.filter(user=request.user, ordered=True)
+    context = {'carts':carts,'customer':customer, 'orders':orders}
+    return render(request, 'index.html', context)
+
+def userprofile(request):
+    customer = Customer.objects.get(user_id=request.user.id)
+    context = {'customer':customer}
+    return render(request, 'users/profile.html', context)
+
+def remove_from_cart(request, id):
+    item = get_object_or_404(Post, id=id)
+    order_obj = Order.objects.filter(user=request.user, ordered=False)
+    if order_obj.exists():
+        order = order_obj[0]
+        if order.orderitems.filter(item=item).exists():
+            order_item = Cart.objects.filter(item=item, user=request.user, purchase=False)[0]
+            order.orderitems.remove(order_item)
+            order_item.delete()
+            messages.warning(request, "This product is removed form your cart")
+            return redirect("cart")
+        else:
+            messages.info(request, "This item was not in your cart")
+            return redirect("cart")
+    else:
+        messages.info(request,"You don't have an active order")
+        return redirect("home")
+
+
+
+def checkout(request):
+    user = None
+    # coupon = promocode.objects.all()
+    if request.method == 'get':
+        try:
+            orders = Order.objects.get(user=request.user, ordered=False)
+            context = {'orders':orders}
+            return render(request, 'checkout.html', context)
+        except ObjectDoesNotExist:
+            messages.info(request, 'You do not have an active order')
+            return redirect('checkout')
+    
+    orders = Order.objects.filter(user=request.user, ordered=False)           
+    user = request.user        
+    if orders.exists():
+        order = orders[0]   
+    orderss = None    
+    order_payment = None
+    action = request.GET.get('action')    
+    if action == 'create_payment':
+        amount = int(order.get_totals() * 100)
+        currency = "NGN"
+        receipt = f"template-{int(time())}"
+        notes = {
+                "email": user.email,
+                "name": f'{user.first_name} {user.last_name}'
+        }
+        orderss = client.order.create({
+        'amount':amount,
+        'currency':currency,
+        'receipt':receipt,
+        'notes':notes
+        })
+
+        orders = Order.objects.filter(user=request.user, ordered=False)    
+        order_payment = orders[0]
+        order_payment.user = user
+        order_payment.emailAddress = user.email
+        # order_payment.coupon = order.coupon
+        order_payment.order_id = orderss.get('id')
+        order_payment.total = orderss.get('amount')
+        order_payment.save()
+    context = {'orderss':orderss, 'order_payment':order_payment, 'orders':orders, 'order':order}
+    return render(request, 'checkout.html', context)
+
+
+def webadmin(request):
+    postcount = Post.objects.all().count()
+    catcount = Category.objects.all().count()
+    usercount = User.objects.all().count()
+    orders = Order.objects.all()
+    context = {'postcount':postcount, 'cat':catcount, 'user':usercount,"orders":orders}
+    return render(request, 'index.html', context)  
+
+def add_post(request):
+    posts= Postserial()
+    if request.method=='POST':
+        posts=Postserial(request.POST, request.FILES)
+        if posts.is_valid():
+            posts.save()
+        messages.success(request, "Posts Added Sucessfully !!")    
+        return redirect('allposts')
+    return render(request, "admin/addpost.html", {'post':posts})
+
+
+def add_course(request):
+    course= Maincourseserial()
+    if request.method=='POST':
+        course=Maincourseserial(request.POST, request.FILES)
+        if course.is_valid():
+            course.save()
+        messages.success(request, "Course Added Sucessfully !!")    
+        return redirect('allcourses')
+    return render(request, "admin/addcourse.html", {'course':course})
+
+
+def add_cat(request):
+    category= Catserial()
+    if request.method=='POST':
+        category=Catserial(request.POST, request.FILES)
+        if category.is_valid():
+            category.save()
+        messages.success(request, "category Added Sucessfully !!")    
+        return redirect('allcat')
+    return render(request, "admin/addcat.html", {'category':category})
+
+def add_curriculam(request):
+    category= Catserial()
+    if request.method=='POST':
+        category=Catserial(request.POST, request.FILES)
+        if category.is_valid():
+            category.save()
+        messages.success(request, "category Added Sucessfully !!")    
+        return redirect('admin')
+    return render(request, "admin/addcat.html", {'category':category})
+
+#This is for show all Posts in Custom Admin Panel
+def allposts(request):
+    posts = Post.objects.all()
+    context = {'posts':posts}
+    return render(request, 'admin/allposts.html', context)
+
+#This is for show all Users in Custom Admin Panel
+def allusers(request):
+    # users = User.objects.all()
+    customer = Customer.objects.all()
+    context = {
+        # 'users':users
+    'customer':customer
+    }
+    return render(request, 'admin/allusers.html', context)
+
+def userdetails(request, id):
+    customer = Customer.objects.filter(id=id).first()
+    context = {'customer':customer}
+    return render(request, 'admin/user_detail.html', context)
+
+def allorders(request):
+    orders = Order.objects.filter(ordered=True)
+    carts = Cart.objects.all()
+    context = {
+    'orders':orders, 'carts':carts,
+    }
+    return render(request, 'admin/allorders.html', context)
+
+
+#This is for show all Categories in Custom Admin Panel
+def allcat(request):
+    cat = Category.objects.filter(parent=None).order_by('hit')
+    context = {'cat':cat}
+    return render(request, 'admin/allcat.html', context)
+
+def allcourse(request):
+    course = MainCourse.objects.all()
+    context = {'course':course}
+    return render(request, 'admin/allcourse.html', context)
+
+def edit_post(request, id):
+    if request.method == 'POST':
+        posts = Post.objects.get(id=id)
+        editpostForm= EditPostserial(request.POST or None, request.FILES or None, instance=posts)
+        if editpostForm.is_valid():
+            editpostForm.save()
+        messages.success(request, "Post Update Sucessfully !!")
+        return redirect('allposts')
+    else:
+        posts = Post.objects.get(id=id)
+        editpostForm= EditPostserial(instance=posts)
+
+    return render(request, "admin/editposts.html", {'editpost':editpostForm})
+    
+def delete_post(request, id):
+    delete = Post.objects.get(pk=id)  #pk means primary key
+    delete.delete()
+    messages.success(request, "Post Deleted Successfully.")
+    return redirect('allposts')
+
+
+#For edit the categories
+def edit_cat(request, id):
+    if request.method == 'POST':
+        cat = Category.objects.get(id=id)
+        editcatForm= Catserial(request.POST or None, request.FILES or None, instance=cat)
+        if editcatForm.is_valid():
+            editcatForm.save()
+            messages.success(request, "Category Update Sucessfully !!")
+            return redirect('allcat')
+        else:
+            messages.warning(request, "Category is not Updated !!")
+            return redirect('allcat')    
+    else:
+        cat = Category.objects.get(id=id)
+        editcatForm= Catserial(instance=cat)
+
+    return render(request, "admin/editcat.html", {'editcat':editcatForm})
+
+#For delete the categories    
+def delete_cat(request, id):
+    delete = Category.objects.get(pk=id)  #pk means primary key
+    delete.delete()
+    messages.success(request, "Category Deleted Successfully.")
+    return redirect('allcat')
+
+
+#For edit the course
+def edit_course(request, id):
+    if request.method == 'POST':
+        course = MainCourse.objects.get(id=id)
+        editcourse= EditMaincourseserial(request.POST or None, request.FILES or None, instance=course)
+        if editcourse.is_valid():
+            editcourse.save()
+        messages.success(request, "Course Update Sucessfully !!")
+        return redirect('allcat')
+    else:
+        cat = MainCourse.objects.get(id=id)
+        editcourse= EditMaincourseserial(instance=cat)
+
+    return render(request, "admin/editcourse.html", {'editcourse':editcourse})
+
+#For delete the course
+def delete_course(request, id):
+    delete = MainCourse.objects.get(pk=id)  #pk means primary key
+    delete.delete()
+    messages.success(request, "MainCourse Deleted Successfully.")
+    return redirect('allcourses')
 
 def add_videos(request):
     video= videoserial()
@@ -199,3 +440,108 @@ def paid_video(request, slug):
     vid = video.objects.filter(post=allpost)
     context = {'allpost':allpost, 'vid':vid}
     return render(request, 'paidvideo.html', context)
+
+def alltime(request):
+    f = timing.objects.all()
+    context = {'f':f}
+    return render(request, 'admin/alltime.html', context)
+
+def add_time(request):
+    time= timingserial()
+    if request.method=='POST':
+        time= timingserial(request.POST, request.FILES)
+        if time.is_valid():
+            time.save()
+        messages.success(request, "Timing Added Sucessfully !!")    
+        return redirect('alltime')
+    return render(request, "admin/add_time.html", {'time':time})
+
+def edit_time(request, id):
+    if request.method == 'POST':
+        time = timing.objects.get(id=id)
+        Edittimingform= timingserial(request.POST, instance=time)
+        if Edittimingform.is_valid():
+            Edittimingform.save()
+        messages.success(request, "Timing Update Sucessfully !!")
+        return redirect('alltime')
+    else:
+        time = timing.objects.get(id=id)
+        Edittimingform= timingserial(instance=time)   
+
+    return render(request, "admin/edit_time.html", {'time':Edittimingform})
+
+def delete_time(request, id):
+    delete = timing.objects.get(pk=id)  #pk means primary key
+    delete.delete()
+    messages.success(request, "Timing Deleted Successfully.")
+    return redirect('alltime') 
+
+def allsubcatg(request):
+    f = subcat.objects.all()
+    context = {'f':f}
+    return render(request, 'admin/allsubcat.html', context)
+
+def add_subcatg(request):
+    sub= subcatg()
+    if request.method=='POST':
+        sub= subcatg(request.POST, request.FILES)
+        if sub.is_valid():
+            sub.save()
+        messages.success(request, "Subcat Added Sucessfully !!")    
+        return redirect('allsubcatg')
+    return render(request, "admin/add_subcat.html", {'sub':sub})
+
+def edit_subcatg(request, id):
+    if request.method == 'POST':
+        sub = subcat.objects.get(id=id)
+        editsub = subcatg(request.POST, instance=sub)
+        if editsub.is_valid():
+            editsub.save()
+        messages.success(request, "Subcat Update Sucessfully !!")
+        return redirect('allsubcatg')
+    else:
+        sub = subcat.objects.get(id=id)
+        editsub = subcatg(instance=sub)   
+
+    return render(request, "admin/edit_subcat.html", {'subcat':editsub })
+
+def delete_subcatg(request, id):
+    delete = subcat.objects.get(pk=id)  #pk means primary key
+    delete.delete()
+    messages.success(request, "Subcat Deleted Successfully.")
+    return redirect('allsubcatg') 
+
+def admin_reviews(request):
+    review= admin_reviewserial()
+    if request.method=='POST':
+        review = admin_reviewserial(request.POST, request.FILES)
+        if review.is_valid():
+            review.save()
+        messages.success(request, "Review Added Sucessfully !!")    
+        return redirect('alladmin_review')
+    return render(request, "admin/add_reviews.html", {'review':review})
+
+def delete_admin_review(request, id):
+    delete = Reviews.objects.get(pk=id)  #pk means primary key
+    delete.delete()
+    messages.success(request, "Admin Review Deleted Successfully.")
+    return redirect('alladmin_review')   
+
+def edit_admin_review(request, id):
+    if request.method == 'POST':
+        review = Reviews.objects.get(id=id)
+        edit_admin_reviews = admin_reviewserial(request.POST, instance=review)
+        if edit_admin_reviews .is_valid():
+            edit_admin_reviews .save()
+        messages.success(request, "Reviews Update Sucessfully !!")
+        return redirect('alladmin_review')
+    else:
+        faqs = Reviews.objects.get(id=id)
+        edit_admin_reviews = admin_reviewserial(instance=faqs)
+
+    return render(request, "admin/edit_admin_reviews.html", {'edit':edit_admin_reviews })    
+
+def alladmin_review(request):
+    review = Reviews.objects.all()
+    context = {'review':review}
+    return render(request, 'admin/all_reviews.html', context)    
