@@ -6,17 +6,10 @@ from django.contrib.auth.models import User
 
 
 class Customer(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
-    profile_pic= models.ImageField(upload_to='media/profile_pic',null=True,blank=True)
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    # profile_pic= models.ImageField(upload_to='media/profile_pic',null=True,blank=True)
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20,null=False)
-    Country = models.CharField(max_length=20,null=False, blank=True)
-    Company = models.CharField(max_length=20,null=False, blank=True)
-    City =  models.CharField(max_length=20,null=False, blank=True)
-    State =  models.CharField(max_length=20,null=False, blank=True)
-    Zip_Code =  models.IntegerField(blank=True, default="1")
-    Telephone =  models.IntegerField(blank=True, default="1")
-    Extension =  models.CharField(max_length=20,null=False, blank=True)
     @property
     def get_name(self):
         return self.user.first_name+" "+self.user.last_name
@@ -38,14 +31,10 @@ class Category(models.Model):
     parent = models.ForeignKey('self', related_name='children', on_delete=models.CASCADE, blank = True, null=True)
     title = models.CharField(max_length=100) 
     slug = AutoSlugField(populate_from='title', unique=True, null=False, editable=True)
-    logo = models.ImageField(upload_to='media/catlogo', blank=True, null=True, help_text='Optional')
-    logo1 = models.ImageField(upload_to='media/catlogo', blank=True, null=True, help_text='Optional')
-    logo2 = models.ImageField(upload_to='media/catlogo', blank=True, null=True, help_text='Optional')
+    logo = models.ImageField(upload_to='media/placeholder', blank=True, null=True, help_text='Optional')
     top_three_cat = models.BooleanField(default=False)
-    more = models.BooleanField(default=False, blank=True, verbose_name="For Add In Right Menu")
     created_at = models.DateTimeField(auto_now_add=True)
     disc = models.BooleanField(default=False, verbose_name='Add In Disclaimer')
-    hit = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -93,9 +82,7 @@ class Post(models.Model):
     meta_tags = models.CharField(max_length=2000, blank=True)
     meta_desc = models.TextField(max_length=2000, blank=True)
     slug = AutoSlugField(populate_from='title', max_length=500, unique=True, null=False)
-    image = models.ImageField(upload_to='media/post')
-    image_alt_name = models.CharField(max_length=200, blank=True)
-    logo = models.ImageField(upload_to='media/post') #If user want to add university logo(Slider and Post) 
+    # logo = models.ImageField(upload_to='media/placeholder') #If user want to add logo(Slider and Post) 
     desc = RichTextField(blank=True, null=True)
     #for live classes or offline classes
     badge = models.CharField(max_length=70)
@@ -105,18 +92,11 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1, related_name="posts")
     subcategory = models.ForeignKey(subcat, on_delete=models.CASCADE, default=1, related_name="subcat", blank=True, null=True)
     hit = models.PositiveIntegerField(default=0) #This field is for popular posts
-    button_text = models.CharField(max_length=20, default="Apply Now") #Apply Now and enroll button text
-    slider_post = models.BooleanField(default=False, blank=True)
     maincourse = models.ManyToManyField(MainCourse, blank=True, related_name='posts')
     price = models.IntegerField(default=0)
     old_price = models.IntegerField(default=0)
     discount = models.IntegerField()
-    emi_start_price = models.IntegerField()
-    why_title = models.CharField(max_length=500, blank=True)
-    why1 = RichTextField(blank=True)
-    why2 = RichTextField(blank=True)
-    why3 = RichTextField(blank=True)
-    file = models.FileField(upload_to='media/certificate', null=True, blank=True)
+    file = models.FileField(upload_to='media/placeholder', null=True, blank=True)
     disclaimer = models.BooleanField(default=False, verbose_name='Add In Disclaimer')
     
     def __str__(self):
@@ -191,17 +171,17 @@ class Cart(models.Model):
         return float_total    
         
 class Order(models.Model):
-    method = (
-        ('EMI', "EMI"),
-        ('ONLINE', "Online"),
-    )
+    # method = (
+    #     ('EMI', "EMI"),
+    #     ('ONLINE', "Online"),
+    # )
     orderitems = models.ManyToManyField(Cart)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
     phone = models.CharField(max_length=10, null = False, default='0')
-    coupon = models.ForeignKey(on_delete=models.SET_NULL, blank=True, null=True)
+    # coupon = models.ForeignKey(on_delete=models.SET_NULL, blank=True, null=True)
     total = models.DecimalField(max_digits=10, default=0, decimal_places=2, verbose_name='INR ORDER TOTAL')
-    emailAddress = models.EmailField(max_length=250, blank=True)
+    email = models.EmailField(max_length=250, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     payment_id = models.CharField(max_length=100, null=True)
     order_id =  models.CharField(max_length=100, null=True)
@@ -210,9 +190,9 @@ class Order(models.Model):
         total = 0
         for order_item in self.orderitems.all():
             total += float(order_item.get_total())
-        if self.coupon:    
-            total -= self.coupon.amount    
+        # if self.coupon:    
+        #     total -= self.coupon.amount    
         return total
 
-class message():
+class messages():
     pass

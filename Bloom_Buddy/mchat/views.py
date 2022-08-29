@@ -44,7 +44,7 @@ class mchatclass(APIView):
         }
         return Response (resp)
 
-    def mchat(request):
+def mchat(request):
         if request.method == 'POST':
             print(request.POST)
             questions=test.objects.all()

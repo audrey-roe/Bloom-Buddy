@@ -1,7 +1,5 @@
 from rest_framework import serializers
 
-from django.contrib.auth.forms import UserCreationForm
-
 from .models import *
 
 class createuserserial(serializers.ModelSerializer):
