@@ -7,4 +7,4 @@ django-ckeditor==6.5.0
 django-autoslug==1.9.8
 django-widget-tweaks==1.4.8
 psycopg2==2.8.6
-xhtml2pdf==0.2.5
+# xhtml2pdf==0.2.5
