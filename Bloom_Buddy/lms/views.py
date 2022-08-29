@@ -5,17 +5,8 @@ from .models import *
 from .serializers import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as loginUser, update_session_auth_hash
-from django.contrib.auth.models import Group
-from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
-import io
-# from xhtml2pdf import pisa
-from django.template.loader import get_template
-from django.template import Context
 from django.http import HttpResponse
-from django.urls import reverse
-import json
 from time import time
 from django.views.decorators.csrf import csrf_exempt
 from Bloom_Buddy.settings import *
@@ -183,7 +174,7 @@ def remove_from_cart(request, id):
             order_item = Cart.objects.filter(item=item, user=request.user, purchase=False)[0]
             order.orderitems.remove(order_item)
             order_item.delete()
-            messages.warning(request, "This product is removed form your cart")
+            messages.warning(request, "This product is removed from your cart")
             return redirect("cart")
         else:
             messages.info(request, "This item was not in your cart")
@@ -334,16 +325,16 @@ def allcourse(request):
 def edit_post(request, id):
     if request.method == 'POST':
         posts = Post.objects.get(id=id)
-        editpostForm= EditPostserial(request.POST or None, request.FILES or None, instance=posts)
-        if editpostForm.is_valid():
-            editpostForm.save()
+        editpost= EditPostserial(request.POST or None, request.FILES or None, instance=posts)
+        if editpost.is_valid():
+            editpost.save()
         messages.success(request, "Post Update Sucessfully !!")
         return redirect('allposts')
     else:
         posts = Post.objects.get(id=id)
-        editpostForm= EditPostserial(instance=posts)
+        editpost= EditPostserial(instance=posts)
 
-    return render(request, "admin/editposts.html", {'editpost':editpostForm})
+    return render(request, "admin/editposts.html", {'editpost':editpost})
     
 def delete_post(request, id):
     delete = Post.objects.get(pk=id)  #pk means primary key
@@ -356,9 +347,9 @@ def delete_post(request, id):
 def edit_cat(request, id):
     if request.method == 'POST':
         cat = Category.objects.get(id=id)
-        editcatForm= Catserial(request.POST or None, request.FILES or None, instance=cat)
-        if editcatForm.is_valid():
-            editcatForm.save()
+        editcat= Catserial(request.POST or None, request.FILES or None, instance=cat)
+        if editcat.is_valid():
+            editcat.save()
             messages.success(request, "Category Update Sucessfully !!")
             return redirect('allcat')
         else:
@@ -366,9 +357,9 @@ def edit_cat(request, id):
             return redirect('allcat')    
     else:
         cat = Category.objects.get(id=id)
-        editcatForm= Catserial(instance=cat)
+        editcat= Catserial(instance=cat)
 
-    return render(request, "admin/editcat.html", {'editcat':editcatForm})
+    return render(request, "admin/editcat.html", {'editcat':editcat})
 
 #For delete the categories    
 def delete_cat(request, id):
@@ -413,16 +404,16 @@ def add_videos(request):
 def edit_videos(request, id):
     if request.method == 'POST':
         vid = video.objects.get(id=id)
-        editvideoForm= videoserial(request.POST or None, request.FILES or None, instance=vid)
-        if editvideoForm.is_valid():
-            editvideoForm.save()
+        editvideo= videoserial(request.POST or None, request.FILES or None, instance=vid)
+        if editvideo.is_valid():
+            editvideo.save()
         messages.success(request, "Video Update Sucessfully !!")
         return redirect('allcat')
     else:
         vid = video.objects.get(id=id)
-        editvideoForm= videoserial(instance=vid)
+        editvideo= videoserial(instance=vid)
 
-    return render(request, "admin/editvideo.html", {'editvideo':editvideoForm})
+    return render(request, "admin/editvideo.html", {'editvideo':editvideo})
 
 def delete_video(request, id):
     delete = video.objects.get(pk=id)  #pk means primary key

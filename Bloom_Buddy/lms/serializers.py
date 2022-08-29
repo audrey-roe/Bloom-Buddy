@@ -1,5 +1,4 @@
 from pyexpat.errors import messages
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
 from .models import *
@@ -91,7 +90,6 @@ class CustomerEditserial(serializers.ModelSerializers):
         fields='__all__'
 
 class CustomerCreationEditserial(serializers.ModelSerializers):
-    # password = forms.CharField(widget=forms.TextInput(attrs={'type':'hidden'}))
     username = serializers.EmailField(required=True , label="Email" )
     first_name = serializers.CharField(required=True , label="First Name")
     last_name = serializers.CharField(required=True , label="Last Name")
