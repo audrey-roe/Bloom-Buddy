@@ -1,10 +1,9 @@
-# from xmlrpc.client import Boolean
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class info(models.Model):
-    child_name = models.CharField(max_length= 200, null =  False, blank = False)
+    child_name = models.OneToOneField(User, on_delete=models.CASCADE)
     child_age = models.PositiveIntegerField()
     caregiver_name = models.CharField(max_length= 200, null =  False, blank = False)
     relation_to_child = models.CharField(max_length= 200, null =  False, blank = False)
@@ -19,10 +18,8 @@ class info(models.Model):
 
 class test(models.Model):
     question = models.CharField(max_length=200,null=True)
-    yes = models.TextField(max_length= 3, null =  False, blank = False, default='Yes')
-    no = models.TextField(max_length= 3, null =  False, blank = False, default='No')
     ans = models.BooleanField(max_length=200, null=True)
     
     def __str__(self):
-        return self.question
+        return f"Question: {self.question} Ans: {self.ans}"
 
