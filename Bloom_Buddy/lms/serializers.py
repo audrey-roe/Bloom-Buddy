@@ -6,23 +6,12 @@ from rest_framework import serializers
 
 
 class Postserial(serializers.ModelSerializer):
-    maincourse = serializers.ModelMultipleChoiceField(
-            queryset=MainCourse.objects.all(),
-            widget=serializers.CheckboxSelectMultiple,
-            required=True)
     
     class Meta:
         model = Post
         fields = '__all__'
 
-class EditPostserial(serializers.ModelSerializers):
-    maincourse = serializers.ModelMultipleChoiceField(
-            queryset=MainCourse.objects.all(),
-            widget=serializers.CheckboxSelectMultiple,
-            required=True)    
-    class Meta:
-        model = Post
-        fields = '__all__'
+
 
 class timingserial(serializers.ModelSerializers):
     class Meta:
@@ -35,19 +24,8 @@ class Catserial(serializers.ModelSerializers):
         model = Category
         fields = '__all__'
 
-class EditCatserial(serializers.ModelSerializers):
-    
-    class Meta:
-        model = Category
-        fields = '__all__'
 
 class Maincourseserial(serializers.ModelSerializers):
-    
-    class Meta:
-        model = MainCourse
-        fields = ['title']
-
-class EditMaincourseserial(serializers.ModelSerializers):
     
     class Meta:
         model = MainCourse
@@ -143,7 +121,7 @@ class rightmenu(serializers.ModelSerializers):
         model = Category
         exclude = ['parent']    
 
-class admin_reviewserial(serializers.ModelSerializer):
+class reviewserial(serializers.ModelSerializer):
 
     class Meta:
         model = Reviews

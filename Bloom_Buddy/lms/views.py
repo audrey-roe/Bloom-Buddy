@@ -1,15 +1,16 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import *
 from .serializers import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as loginUser, update_session_auth_hash
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from time import time
 from django.views.decorators.csrf import csrf_exempt
 from Bloom_Buddy.settings import *
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 
@@ -18,35 +19,32 @@ client = paystack.Client(auth=('KEY_ID', 'KEY_SECRET'))
 
 # Create your views here.
 
-
-def home(request):
-    allposts = Post.objects.all().filter(maincourse=True)
-    totalposts = Post.objects.all().order_by('-date')[:8]
-    slider_post = Post.objects.all().filter(slider_post=True)
-    top_three_catg = Category.objects.filter(top_three_cat=True)[:3]
-    main_course = MainCourse.objects.all()
-    allcat = Category.objects.all()
-    categories = Category.objects.all().filter(top_three_cat=False).filter(more=False).order_by('-created_at')[:7]
-    footcategories = Category.objects.filter(parent=None)[:2]
-    catg = Category.objects.all().exclude(parent=None).order_by('-created_at')[:7]
-    # catg_parent = Category.objects.all().exclude(parent=True).order_by('-hit')
-    latest_catg = Category.objects.filter(parent=None)[:5]
-    latest_catg_all = Category.objects.filter(parent=None)[5:]
-    latest_post = Post.objects.order_by('-date')[:4]
-    rev = Reviews.objects.all().order_by('-created')[:6]
-    context = { 'allposts':allposts, 
-                'main_course':main_course, 
-                'top_three_catg':top_three_catg, 
-                'catg':catg, 
-                'latest_catg':latest_catg, 
-                'latest_post':latest_post, 
-                'totalposts':totalposts, 
-                # 'catg_parent':catg_parent,
-                'allcat':allcat, 
-                'categories':categories, 
-                'latest_catg_all':latest_catg_all
-                }
-    return render(request, 'home.html', context)
+class home(APIView):
+    def get(self, request):
+        allposts = Postserial(Post.objects.filter(maincourse=True), many = True)
+        totalposts = Postserial(Post.objects.order_by('-date')[:8], many = True)
+        top_three_catg = Catserial(Category.objects.filter(top_three_cat=True)[:3], many = True)
+        main_course = Maincourseserial(MainCourse.objects.all(), many = True)
+        allcat = Catserial(Category.objects.all(), many = True)
+        categories = Catserial(Category.objects.filter(top_three_cat=False).filter(more=False).order_by('-created_at')[:7], many = True)
+        catg = Catserial(Category.objects.exclude(parent=None).order_by('-created_at')[:7], many = True)
+        latest_catg = Catserial(Category.objects.filter(parent=None)[:5], many = True)
+        latest_catg_all = Catserial(Category.objects.filter(parent=None)[5:], many = True)
+        latest_post = Postserial(Post.objects.order_by('-date')[:4], many = True)
+        rev = reviewserial(Reviews.objects.order_by('-created')[:6], many = True)
+        context = { 'allposts':allposts, 
+                    'main_course':main_course, 
+                    'top_three_catg':top_three_catg, 
+                    'catg':catg, 
+                    'latest_catg':latest_catg, 
+                    'latest_post':latest_post, 
+                    'totalposts':totalposts, 
+                    'allcat':allcat, 
+                    'categories':categories, 
+                    'latest_catg_all':latest_catg_all,
+                    'reviews' : rev
+                    }
+        return Response(context)
 
 
 def totalposts(request):
@@ -57,19 +55,19 @@ def totalposts(request):
 def post_by_category(request, catslug):
     posts = Post.objects.all()
     cat_post = Post.objects.filter(category__slug=catslug)
-    allposts = Post.objects.all().filter(maincourse=True)
-    slider_post = Post.objects.all().filter(slider_post=True)
+    allposts = Post.objects.filter(maincourse=True)
+    slider_post = Post.objects.filter(slider_post=True)
     top_three_catg = Category.objects.filter(top_three_cat=True)[:3]
     main_course = MainCourse.objects.all()
     allcat = Category.objects.all()
     categories = Category.objects.filter(parent=None).order_by('-created_at')[:7]
     footcategories = Category.objects.filter(parent=None)[:2]
-    catg = Category.objects.all().exclude(parent=None).order_by('-created_at')[:7]
-    catg_parent = Category.objects.all().exclude(parent=True)
+    catg = Category.objects.exclude(parent=None).order_by('-created_at')[:7]
+    catg_parent = Category.objects.exclude(parent=True)
     latest_catg = Category.objects.filter(parent=None)[:5]
     latest_post = Post.objects.order_by('-date')[:4]
     latest_catg_all = Category.objects.filter(parent=None)[5:]
-    rev = Reviews.objects.all().order_by('-created')[:6]
+    rev = Reviews.objects.order_by('-created')[:6]
     context = {'latest_catg_all':latest_catg_all, 'rev':rev, 'posts':posts, 'cat_post':cat_post,'allposts':allposts, 'main_course':main_course, 'top_three_catg':top_three_catg, 'catg':catg, 'slider_post':slider_post, 'latest_catg':latest_catg, 'latest_post':latest_post}
     return render(request, 'postbycat.html', context)
 
@@ -77,7 +75,7 @@ def allpost_by_category(request, postslug):
     posts = Post.objects.all()
     cat_post = Post.objects.filter(category__slug=postslug)
     subcat_post = Post.objects.filter(subcategory__slug=postslug)
-    allposts = Post.objects.all().filter(maincourse=True)
+    allposts = Post.objects.filter(maincourse=True)
     allcat = Category.objects.all()
     context = {'posts':posts,'subcat_post':subcat_post, 'cat_post':cat_post,'allposts':allposts,'allcat':allcat,}
     return render(request, 'allpostsbycat.html', context)
@@ -90,25 +88,33 @@ def subcat_by_category(request, subcatslug):
     context = {'cat_subcat':cat_subcat, 'category':category, 'allcats':allcats}
     return render(request, 'subcatbyhtml.html', context)
   
-def post_details(request, category_slug, slug):
-    posts = Post.objects.filter(slug=slug).first()
-    category = Post.objects.filter(slug=category_slug)
-    catg_parent = Category.objects.all().exclude(parent=True)    
-    allcat = Category.objects.all()
-    allpost = get_object_or_404(Post, slug=slug)
-    time = timing.objects.filter(Post=allpost)    
-    #for Videos
-    vid = video.objects.filter(post=allpost)    
-    #for Reviews
-    if request.method == 'POST' and request.user.is_authenticated:
-        allstars = request.POST.get('stars', '')
-        allcontent = request.POST.get('content', '')
-        reviews = Reviews.objects.create(post=allpost, user=request.user, stars=allstars, content=allcontent)
-        return redirect('home')        
-    reviews = Reviews.objects.filter(post=allpost)    
+class post_details(APIView):
+    def get(self, request, category_slug, slug):
+        posts = Postserial(Post.objects.filter(slug=slug).first())
+        category = Postserial(Post.objects.filter(slug=category_slug), many = True)
+        catg_parent = Catserial(Category.objects.exclude(parent=True), many = True)
+        allcat = Catserial(Category.objects.all(), many = True)
+        allpost = Postserial(Post.objects.all(), many = True)
+        time = timingserial(timing.objects.filter(Post=allpost), many = True)
+        #for Videos
+        vid = videoserial(video.objects.filter(post=allpost), many = True)
+        #for Reviews
+            
+        reviews = reviewserial(Reviews.objects.filter(post=allpost), many = True)
 
-    context = {'posts':posts, 'category':category, 'allcat':allcat, 'catg_parent':catg_parent, 'allpost':allpost, 'reviews':reviews, 'time':time, 'videos':vid}
-    return render(request, 'details.html', context)
+        context = {'posts':posts, 'category':category, 'allcat':allcat, 'catg_parent':catg_parent, 'allpost':allpost, 'reviews':reviews, 'time':time, 'videos':vid}
+        return Response (context)
+    
+    def post(self, request):
+        Reviews.objects.create(post=Post.objects.get(
+            id = request.data['rev_id']),
+            user=request.user,
+            stars=request.data['no_o_stars'],
+            content=request.data['content']
+            )
+        return Response({
+            'message' : 'successfully added review'
+        })
 
 def search(request):
     search = request.GET['search']
@@ -232,9 +238,9 @@ def checkout(request):
 
 
 def webadmin(request):
-    postcount = Post.objects.all().count()
-    catcount = Category.objects.all().count()
-    usercount = User.objects.all().count()
+    postcount = Post.objects.count()
+    catcount = Category.objects.count()
+    usercount = User.objects.count()
     orders = Order.objects.all()
     context = {'postcount':postcount, 'cat':catcount, 'user':usercount,"orders":orders}
     return render(request, 'index.html', context)  

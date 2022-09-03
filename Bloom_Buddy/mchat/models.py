@@ -23,4 +23,3 @@ class test(models.Model):
     
     def __str__(self):
         return f"Question: {self.question} Ans: {self.ans}"
-
