@@ -3,13 +3,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class info(models.Model):
-    child_name = models.OneToOneField(User, on_delete=models.CASCADE)
+    caregiver = models.OneToOneField(User, on_delete=models.CASCADE)#should contain name and email
+    child_name = models.CharField(max_length=200)
     child_age = models.PositiveIntegerField()
-    caregiver_name = models.CharField(max_length= 200, null =  False, blank = False)
-    relation_to_child = models.CharField(max_length= 200, null =  False, blank = False)
-    caregiver_email = models.EmailField( max_length=50, db_index=True, unique=True)
+    relation_to_child = models.CharField(max_length= 200)
+    caregiver_email = models.EmailField( max_length=50)
     caregiver_phone = models.BigIntegerField()
     date = models.DateField(null=True, blank=True)
+    test_score = models.IntegerField(null = True, blank= True)
 
 
     def __str__(self):
