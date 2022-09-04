@@ -113,6 +113,7 @@ class subcat_by_category(request, subcatslug):
         return Response(context)
     
 class post_details(APIView):
+
     def get(self, request, category_slug, slug):
         posts = Postserial(Post.objects.filter(slug=slug).first())
         category = Postserial(Post.objects.filter(slug=category_slug), many = True)
@@ -126,25 +127,40 @@ class post_details(APIView):
             
         reviews = reviewserial(Reviews.objects.filter(post=allpost), many = True)
 
-        context = {'posts':posts, 'category':category, 'allcat':allcat, 'catg_parent':catg_parent, 'allpost':allpost, 'reviews':reviews, 'time':time, 'videos':vid}
+        context = {
+                    'posts':posts, 
+                    'category':category, 
+                    'allcat':allcat, 
+                    'catg_parent':catg_parent, 
+                    'allpost':allpost, 
+                    'reviews':reviews, 
+                    'time':time, 
+                    'videos':vid
+                    }
         return Response (context)
     
     def post(self, request):
-        Reviews.objects.create(post=Post.objects.get(
-            id = request.data['rev_id']),
-            user=request.user,
-            stars=request.data['no_o_stars'],
-            content=request.data['content']
+        Reviews.objects.create(
+            post=Post.objects.get(
+                id = request.data['rev_id']),
+                user=request.user,
+                stars=request.data['no_o_stars'],
+                content=request.data['content']
             )
         return Response({
             'message' : 'successfully added review'
         })
 
-def search(request):
-    search = request.GET['search']
-    totalposts = Post.objects.filter(title__icontains=search)
-    context = {'totalposts':totalposts, 'search':search}
-    return render(request, 'search.html', context)
+class search(APIView):
+
+    def get(self, request):
+        search = request.GET['search']
+        totalposts = Postserial(Post.objects.filter(title__icontains=search), many = True)
+        context = {
+                    'totalposts':totalposts, 
+                    'search':search
+                    }
+        return Response(context)
 
 def videos(request):
     return render(request, 'videos.html')
@@ -152,18 +168,44 @@ def videos(request):
 def addVideosWatched(request, video_id):
     pass
 
-def courses(request):
-    main_course = MainCourse.objects.all()
-    context = {'main_course':main_course}
-    return render(request, 'courses.html', context)
+class course(APIView):
 
-@csrf_exempt
-def verify_payment(request):
-    if request.method == 'POST':
-        data = request.POST
-        context = {}
-        print(data)
-        try:
+    def get(self, request):
+        main_course = Maincourseserialserial(MainCourse.objects.all(), many = True)
+        context = {'main_course':main_course}
+        return Response(context)
+
+# @csrf_exempt
+class verify_payment(APIView):
+
+    # def post(self, request):
+    #     if request.method == 'POST':
+    #         data = request.POST
+    #         context = {}
+    #         print(data)
+    #         try:
+    #             client.utility.verify_payment_signature(data)
+    #             paystack_order_id = data['paystack_order_id']
+    #             paystack_payment_id = data['paystack_payment_id']
+    #             order = Order.objects.get(order_id = paystack_order_id)
+    #             order.payment_id = paystack_payment_id
+    #             order.ordered = True
+    #             order.save() # i remembered the save this time
+    #             cart_items = Cart.objects.filter(user=request.user, purchase=False)
+    #             for item in cart_items:
+    #                 item.purchase = True
+    #                 item.save()
+    #             return redirect('home')
+    #         except:
+    #             return HttpResponse("Invalid Payment Details")    
+        def get(self, request):
+                cart_items = Cart.objects.filter(user=request.user, purchase=False)
+                for item in cart_items:
+                    item.purchase = True
+                    item.save()
+                return redirect('home')    
+                
+        def post(self, request):
             client.utility.verify_payment_signature(data)
             paystack_order_id = data['paystack_order_id']
             paystack_payment_id = data['paystack_payment_id']
@@ -171,13 +213,14 @@ def verify_payment(request):
             order.payment_id = paystack_payment_id
             order.ordered = True
             order.save() # i remembered the save this time
-            cart_items = Cart.objects.filter(user=request.user, purchase=False)
-            for item in cart_items:
-                item.purchase = True
-                item.save()
-            return redirect('home')
-        except:
-            return HttpResponse("Invalid Payment Details")    
+
+            return Response({
+            'message' : "Invalid Payment Details"
+        })
+
+                
+
+            
 
 def logout(request):
     request.session.clear()
