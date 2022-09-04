@@ -40,12 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
     'knox',
     # 'channels',
     # 'crispy_forms',
     # 'widget_tweaks',
     # 'ckeditor',
-
     'mchat',
     'lms',
 ]

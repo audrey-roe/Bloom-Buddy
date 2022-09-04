@@ -83,7 +83,7 @@ class Post(models.Model):
     # meta_desc = models.TextField(max_length=2000, blank=True)
     slug = AutoSlugField(populate_from='title', max_length=500, unique=True, null=False)
     # logo = models.ImageField(upload_to='media/placeholder') #If user want to add logo(Slider and Post) 
-    desc = CharField(blank=True, null=True)
+    desc = models.CharField(max_length=2000, blank=True, null=True)
     #for live classes or offline classes
     # badge = models.CharField(max_length=70)
     youtube = models.URLField(max_length=500, default='' )
@@ -111,7 +111,7 @@ class Post(models.Model):
 class timing(models.Model):    
     date = models.CharField(max_length=100, blank=True, null=True)
     # day_duration = models.CharField(max_length=100, blank=True, null=True)
-    time_duration = models.DurationField()(max_length=100, blank=True, null=True)
+    time_duration = models.DurationField(max_length=100, blank=True, null=True)
     # time_duration2 = models.CharField(max_length=100, blank=True, null=True)
     Post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='time_posts')
 
@@ -121,7 +121,7 @@ class video(models.Model):
     vid = models.FileField(null=False)
     video_id = models.CharField(max_length=100)
     is_preview = models.BooleanField(default=False)
-    desc = CharField(blank=True, null=True)
+    desc = models.CharField(max_length= 2000, blank=True, null=True)
     duration_of_the_vid = models.DurationField(timing, blank=False, null=False)
 
     def __str__(self):

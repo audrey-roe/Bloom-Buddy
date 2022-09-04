@@ -13,113 +13,49 @@ class Postserial(serializers.ModelSerializer):
 
 
 
-class timingserial(serializers.ModelSerializers):
+class timingserial(serializers.ModelSerializer):
     class Meta:
         model = timing
         fields =  '__all__'
 
-class Catserial(serializers.ModelSerializers):
+class Catserial(serializers.ModelSerializer):
     
     class Meta:
         model = Category
         fields = '__all__'
 
 
-class Maincourseserial(serializers.ModelSerializers):
+class Maincourseserial(serializers.ModelSerializer):
     
     class Meta:
         model = MainCourse
-        fields = ['title']
+        fields = '__all__'
 
 
 # User Creation
-class CustomerAuthserial(serializers.ModelSerializers):
-#     username = serializers.EmailField(required=True , label="Email")
+class CustomerAuthserial(serializers.ModelSerializer):
 
-# class CustomerCreationserial(serializers.ModelSerializers):
-    
-#     username = serializers.EmailField(required=True , label="Email" )
-#     first_name = serializers.CharField(required=True , label="First Name")
-#     last_name = serializers.CharField(required=True , label="Last Name")
     class Meta:
         model = User
-        fields = ['username' ,'first_name' , "last_name" ]
+        fields = '__all__'
 
-    # def clean_first_name(self):
-    #     value = self.cleaned_data.get('first_name')
-    #     if len(value.strip()) < 4 :
-    #         raise ValidationError("First Name must be atleast 4 char long...")
-    #     return value.strip()
-    
-    # def clean_last_name(self):
-    #     value = self.cleaned_data.get('last_name')
-    #     if len(value.strip()) < 4 :
-    #         raise ValidationError("Last Name must be atleast 4 char long...")
-    #     return value.strip()
-
-class Customerserial(serializers.ModelSerializers):
+class Customerserial(serializers.ModelSerializer):
     class Meta:
-        model=Customer
-        # fields=['address','mobile','profile_pic']
-
-# class CustomerEditserial(serializers.ModelSerializers):
-#     class Meta:
-#         model=Customer
+        model = Customer
         fields='__all__'
 
-# class CustomerCreationEditserial(serializers.ModelSerializers):
-#     username = serializers.EmailField(required=True , label="Email" )
-#     first_name = serializers.CharField(required=True , label="First Name")
-#     last_name = serializers.CharField(required=True , label="Last Name")
-#     class Meta:
-#         model = User
-#         fields = ['username' ,'first_name' , "last_name"]
-#         exclude = ['password']
-
-# class changepassword(serializers.ModelSerializer):    
-#     class Meta:
-#         model = User
-#         fields = ['password1']
-#         exclude = ['username', 'first_name','last_name']
-
-# class Customerloginserial(serializers.ModelSerializer):
-#     username = serializers.EmailField(required=True, label="Email")
-#     password = serializers.PasswordInput()
-
-
-# class Userpermission(serializers.ModelSerializer):
-#     role = serializers.ModelChoiceField(queryset=Group.objects.all())    
-
-#     class Meta:
-#         model = User
-#         fields = ['first_name','last_name']
-
-class videoserial(serializers.ModelSerializers):
+class videoserial(serializers.ModelSerializer):
 
     class Meta:
         model = video
         fields = '__all__'
 
-class subcatgserial(serializers.ModelSerializers):
+class subcatgserial(serializers.ModelSerializer):
     
     class Meta:
         model = subcat
         fields = '__all__'
-    
-# class leftmenu(serializers.ModelSerializers):
-#     class Meta:
-#         model = Category
-#         exclude = ['top_three_cat']    
-
-# class middlemenu(serializers.ModelSerializers):
-#     class Meta:
-#         model = Category
-#         exclude = ['parent', 'top_three_cat', ]    
-
-# class rightmenu(serializers.ModelSerializers):
-#     class Meta:
-#         model = Category
-#         exclude = ['parent']    
+     
 
 class reviewserial(serializers.ModelSerializer):
 
@@ -128,17 +64,6 @@ class reviewserial(serializers.ModelSerializer):
         fields = '__all__'          
 
 class checkoutserial(serializers.ModelSerializer):
-    #dunno what paystack will require, just trying to be extensive
-
-    # mobile = serializers.IntegerField()        
-    # street_address = serializers.CharField()        
-    # state = serializers.CharField(required=False)
-    # country = serializers.CharField(label="Country")
-    # # zipcode = serializers.CharField()
-    # billing_address = serializers.BooleanField(widget=serializers.CheckboxInput())
-    # save_info = serializers.BooleanField(widget=serializers.CheckboxInput())
-    # payment_option = serializers.BooleanField(widget=serializers.RadioSelect())    
-
     class Meta:
         model = Reviews
         fields = '__all__'      

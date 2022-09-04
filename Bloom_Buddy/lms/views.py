@@ -7,16 +7,19 @@ from django.contrib.auth import authenticate, login as loginUser, update_session
 from django.http import HttpResponse
 from time import time
 from django.views.decorators.csrf import csrf_exempt
-from Bloom_Buddy.settings import *
+# from Bloom_Buddy.settings import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+# from knox.auth import TokenAuthentication
 
+# import paystack #test with sandbox
+# client = paystack.Client(auth=('KEY_ID', 'KEY_SECRET'))
 
-import paystack #test with sandbox
-client = paystack.Client(auth=('KEY_ID', 'KEY_SECRET'))
-
+# @api_view(['POST'])
+# @authentication_classes([TokenAuthentication,SessionAuthentication, BasicAuthentication])
+# @permission_classes([IsAuthenticated])
 # Create your views here.
 
 class home(APIView):
@@ -99,7 +102,7 @@ class allpost_by_category(APIView):
                     }  
         return Response(context)
 
-class subcat_by_category(request, subcatslug):
+class subcat_by_category(APIView):
     def get (self, request, subcatslug):
         # allcats = get_object_or_404(Category, slug=subcatslug)
         category = subcatgserial(subcat.objects.filter(slug=subcatslug), many= True)
@@ -176,51 +179,50 @@ class course(APIView):
         return Response(context)
 
 # @csrf_exempt
-class verify_payment(APIView):
-
-    # def post(self, request):
-    #     if request.method == 'POST':
-    #         data = request.POST
-    #         context = {}
-    #         print(data)
-    #         try:
-    #             client.utility.verify_payment_signature(data)
-    #             paystack_order_id = data['paystack_order_id']
-    #             paystack_payment_id = data['paystack_payment_id']
-    #             order = Order.objects.get(order_id = paystack_order_id)
-    #             order.payment_id = paystack_payment_id
-    #             order.ordered = True
-    #             order.save() # i remembered the save this time
-    #             cart_items = Cart.objects.filter(user=request.user, purchase=False)
-    #             for item in cart_items:
-    #                 item.purchase = True
-    #                 item.save()
-    #             return redirect('home')
-    #         except:
-    #             return HttpResponse("Invalid Payment Details")    
-        def get(self, request):
+@api_view
+def verify_payment(self, request):
+    if request.method == 'POST':
+            data = request.POST
+            context = {}
+            print(data)
+            try:
+                client.utility.verify_payment_signature(data)
+                paystack_order_id = data['paystack_order_id']
+                paystack_payment_id = data['paystack_payment_id']
+                order = Order.objects.get(order_id = paystack_order_id)
+                order.payment_id = paystack_payment_id
+                order.ordered = True
+                order.save() # i remembered the save this time
                 cart_items = Cart.objects.filter(user=request.user, purchase=False)
                 for item in cart_items:
                     item.purchase = True
                     item.save()
-                return redirect('home')    
-                
-        def post(self, request):
-            client.utility.verify_payment_signature(data)
-            paystack_order_id = data['paystack_order_id']
-            paystack_payment_id = data['paystack_payment_id']
-            order = Order.objects.get(order_id = paystack_order_id)
-            order.payment_id = paystack_payment_id
-            order.ordered = True
-            order.save() # i remembered the save this time
-
-            return Response({
+                return redirect('home')
+            except:
+                return Response({
             'message' : "Invalid Payment Details"
         })
 
-                
 
-            
+        # def get(self, request):
+        #         cart_items = Cart.objects.filter(user=request.user, purchase=False)
+        #         for item in cart_items:
+        #             item.purchase = True
+        #             item.save()
+        #         return redirect('home')    
+
+        # def post(self, request):
+        #     client.utility.verify_payment_signature(data)
+        #     paystack_order_id = data['paystack_order_id']
+        #     paystack_payment_id = data['paystack_payment_id']
+        #     order = Order.objects.get(order_id = paystack_order_id)
+        #     order.payment_id = paystack_payment_id
+        #     order.ordered = True
+        #     order.save() # i remembered the save this time
+
+        #     return Response({
+        #     'message' : "Invalid Payment Details"
+        # })
 
 def logout(request):
     request.session.clear()
