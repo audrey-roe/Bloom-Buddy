@@ -65,7 +65,7 @@ class subcat(models.Model):
         return self.title
 
     class Meta:
-        unique_together = ('slug', 'parent',)
+        unique_together = ('slug', 'parent')
         #This is for outside or main which shows outside panel.    
         verbose_name_plural = "Sub Categories"     
 
@@ -79,13 +79,13 @@ class subcat(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=500)
-    meta_tags = models.CharField(max_length=2000, blank=True)
-    meta_desc = models.TextField(max_length=2000, blank=True)
+    # meta_tags = models.CharField(max_length=2000, blank=True)
+    # meta_desc = models.TextField(max_length=2000, blank=True)
     slug = AutoSlugField(populate_from='title', max_length=500, unique=True, null=False)
     # logo = models.ImageField(upload_to='media/placeholder') #If user want to add logo(Slider and Post) 
-    desc = RichTextField(blank=True, null=True)
+    desc = CharField(blank=True, null=True)
     #for live classes or offline classes
-    badge = models.CharField(max_length=70)
+    # badge = models.CharField(max_length=70)
     youtube = models.URLField(max_length=500, default='' )
     author = models.CharField(max_length=20, default="admin" )
     date = models.DateTimeField(auto_now_add=True)
@@ -110,9 +110,9 @@ class Post(models.Model):
 
 class timing(models.Model):    
     date = models.CharField(max_length=100, blank=True, null=True)
-    day_duration = models.CharField(max_length=100, blank=True, null=True)
-    time_duration1 = models.CharField(max_length=100, blank=True, null=True)
-    time_duration2 = models.CharField(max_length=100, blank=True, null=True)
+    # day_duration = models.CharField(max_length=100, blank=True, null=True)
+    time_duration = models.DurationField()(max_length=100, blank=True, null=True)
+    # time_duration2 = models.CharField(max_length=100, blank=True, null=True)
     Post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='time_posts')
 
 class video(models.Model):
@@ -121,14 +121,14 @@ class video(models.Model):
     vid = models.FileField(null=False)
     video_id = models.CharField(max_length=100)
     is_preview = models.BooleanField(default=False)
-    desc = RichTextField(blank=True, null=True)
-    duration_of_the_vid = models.DurationField(blank=False, null=False)
+    desc = CharField(blank=True, null=True)
+    duration_of_the_vid = models.DurationField(timing, blank=False, null=False)
 
     def __str__(self):
         return self.title
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name='comments')
     name = models.CharField(max_length=80)
     email = models.EmailField()
     body = models.TextField()
@@ -160,7 +160,7 @@ class Cart(models.Model):
     purchase = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    certificate = models.BooleanField(default=False)
+    # certificate = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.item}'
