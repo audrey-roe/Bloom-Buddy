@@ -6,7 +6,6 @@ from rest_framework import serializers
 
 
 class Postserial(serializers.ModelSerializer):
-    
     class Meta:
         model = Post
         fields = '__all__'
@@ -19,7 +18,6 @@ class timingserial(serializers.ModelSerializer):
         fields =  '__all__'
 
 class Catserial(serializers.ModelSerializer):
-    
     class Meta:
         model = Category
         fields = '__all__'
@@ -33,11 +31,11 @@ class Maincourseserial(serializers.ModelSerializer):
 
 
 # User Creation
-class CustomerAuthserial(serializers.ModelSerializer):
+# class CustomerAuthserial(serializers.ModelSerializer):
 
-    class Meta:
-        model = User
-        fields = '__all__'
+#     class Meta:
+#         model = User
+#         fields = '__all__'
 
 class Customerserial(serializers.ModelSerializer):
     class Meta:
@@ -68,9 +66,19 @@ class checkoutserial(serializers.ModelSerializer):
         model = Reviews
         fields = '__all__'      
 
-# class sendmessage(forms.ModelForm):
+class CartSerial(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = '__all__' 
+           
+
+class OrderSerializer(serializers.ModelSerializer):
+        class Meta:
+             model = Order
+             fields = '__all__' 
+
+# class sendmsgserialize(serializers.ModelSerializer):
 
 #     class Meta:
 #         model = message
 #         fields = '__all__'
-#         exclude = ['wp']

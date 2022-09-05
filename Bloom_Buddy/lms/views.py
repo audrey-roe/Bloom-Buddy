@@ -142,7 +142,7 @@ class post_details(APIView):
                     }
         return Response (context)
     
-    def post(self, request):
+    def post(self, request, data):
         Reviews.objects.create(
             post=Post.objects.get(
                 id = request.data['rev_id']),
@@ -165,11 +165,12 @@ class search(APIView):
                     }
         return Response(context)
 
-def videos(request):
-    return render(request, 'videos.html')
+class video(APIView):
+    def get(self, request):
+        return Response(status=HTTP_200_OK)
 
-def addVideosWatched(request, video_id):
-    pass
+    def addVideosWatched(self, request, video_id):
+        pass
 
 class course(APIView):
 
@@ -179,7 +180,7 @@ class course(APIView):
         return Response(context)
 
 # @csrf_exempt
-@api_view
+@api_view(['POST'])
 def verify_payment(self, request):
     if request.method == 'POST':
             data = request.POST
@@ -202,8 +203,6 @@ def verify_payment(self, request):
                 return Response({
             'message' : "Invalid Payment Details"
         })
-
-
         # def get(self, request):
         #         cart_items = Cart.objects.filter(user=request.user, purchase=False)
         #         for item in cart_items:
@@ -224,86 +223,98 @@ def verify_payment(self, request):
         #     'message' : "Invalid Payment Details"
         # })
 
-def logout(request):
-    request.session.clear()
-    return redirect('home')
+class logout(APIView):
+    def post(self, request):
+        request.session.clear()
+       # return redirect('home') 
+        return Response(status=HTTP_200_OK)
 
-def userdashboard(request):
-    customer = Customer.objects.all()
-    carts = Cart.objects.filter(user=request.user, purchase=True)
-    orders = Order.objects.filter(user=request.user, ordered=True)
-    context = {'carts':carts,'customer':customer, 'orders':orders}
-    return render(request, 'index.html', context)
+class logout(APIView):
+    def userdashboard(self, request):
+        customer = Customerserial(Customer.objects.all(), many=True)
+        carts = CartSerial(Cart.objects.filter(user=request.user, purchase=True, many =True))
+        orders = OrderSerializer(Order.objects.filter(user=request.user, ordered=True), many =True)
+        context = {
+                    'carts':carts,
+                    'customer':customer, 
+                    'orders':orders
+                }
 
-def userprofile(request):
-    customer = Customer.objects.get(user_id=request.user.id)
-    context = {'customer':customer}
-    return render(request, 'users/profile.html', context)
+        return Response(context)
 
-def remove_from_cart(request, id):
-    item = get_object_or_404(Post, id=id)
-    order_obj = Order.objects.filter(user=request.user, ordered=False)
-    if order_obj.exists():
-        order = order_obj[0]
-        if order.orderitems.filter(item=item).exists():
-            order_item = Cart.objects.filter(item=item, user=request.user, purchase=False)[0]
-            order.orderitems.remove(order_item)
-            order_item.delete()
-            messages.warning(request, "This product is removed from your cart")
-            return redirect("cart")
+class userprofile(APIView):
+    def get(self, request):
+        customer = CustomerAuthserial(Customer.objects.get(user_id=request.user.id), many = True)
+        context = {'customer':customer}
+        return Response(context)
+
+class remove_from_cart(APIView):
+    def post(self, request, id):
+        item = get_object_or_404(Post, id=id)
+        order_obj = Order.objects.filter(user=request.user, ordered=False)
+        if order_obj.exists():
+            order = order_obj[0]
+            if order.orderitems.filter(item=item).exists():
+                order_item = Cart.objects.filter(item=item, user=request.user, purchase=False)[0]
+                order.orderitems.remove(order_item)
+                order_item.delete()
+                return  Response({'message': "This product is removed from your cart"})
+            else:
+                return Response({
+                'message' : "This item was not in your cart"
+            })
         else:
-            messages.info(request, "This item was not in your cart")
-            return redirect("cart")
-    else:
-        messages.info(request,"You don't have an active order")
-        return redirect("home")
+            return Response({
+                'message' : "You don't have an active order"
+            })
 
 
 
-def checkout(request):
-    user = None
-    # coupon = promocode.objects.all()
-    if request.method == 'get':
+class checkout(APIView):
+    def get(self, request):
+        user = None
+        # coupon = promocode.objects.all()
+        # if request.method == 'get':
         try:
             orders = Order.objects.get(user=request.user, ordered=False)
             context = {'orders':orders}
-            return render(request, 'checkout.html', context)
+            return Response(context)
         except ObjectDoesNotExist:
-            messages.info(request, 'You do not have an active order')
-            return redirect('checkout')
+            return Response({'message': "You don't have an active order"})
     
-    orders = Order.objects.filter(user=request.user, ordered=False)           
-    user = request.user        
-    if orders.exists():
-        order = orders[0]   
-    orderss = None    
-    order_payment = None
-    action = request.GET.get('action')    
-    if action == 'create_payment':
-        amount = int(order.get_totals() * 100)
-        currency = "NGN"
-        receipt = f"template-{int(time())}"
-        notes = {
-                "email": user.email,
-                "name": f'{user.first_name} {user.last_name}'
-        }
-        orderss = client.order.create({
-        'amount':amount,
-        'currency':currency,
-        'receipt':receipt,
-        'notes':notes
-        })
+    def post(self, request, data):
+        orders = Order.objects.filter(user=request.user, ordered=False)           
+        user = request.user        
+        if orders.exists():
+            order = orders[0]   
+        orderss = None    
+        order_payment = None
+        action = request.GET.get('action')    
+        if action == 'create_payment':
+            amount = int(order.get_totals() * 100)
+            currency = "NGN"
+            receipt = f"template-{int(time())}"
+            notes = {
+                    "email": user.email,
+                    "name": f'{user.first_name} {user.last_name}'
+            }
+            orderss = client.order.create({
+            'amount':amount,
+            'currency':currency,
+            'receipt':receipt,
+            'notes':notes
+            })
 
-        orders = Order.objects.filter(user=request.user, ordered=False)    
-        order_payment = orders[0]
-        order_payment.user = user
-        order_payment.emailAddress = user.email
-        # order_payment.coupon = order.coupon
-        order_payment.order_id = orderss.get('id')
-        order_payment.total = orderss.get('amount')
-        order_payment.save()
-    context = {'orderss':orderss, 'order_payment':order_payment, 'orders':orders, 'order':order}
-    return render(request, 'checkout.html', context)
+            orders = Order.objects.filter(user=request.user, ordered=False)    
+            order_payment = orders[0]
+            order_payment.user = user
+            order_payment.emailAddress = user.email
+            # order_payment.coupon = order.coupon
+            order_payment.order_id = orderss.get('id')
+            order_payment.total = orderss.get('amount')
+            order_payment.save()
+        context = {'orderss':orderss, 'order_payment':order_payment, 'orders':orders, 'order':order}
+        return Response(context)
 
 
 def webadmin(request):

@@ -10,7 +10,7 @@ class info(models.Model):
     caregiver_email = models.EmailField( max_length=50)
     caregiver_phone = models.BigIntegerField()
     date = models.DateField(null=True, blank=True)
-    test_score = models.IntegerField(null = True, blank= True)
+    score = models.IntegerField(null = True, blank= True)
 
 
     def __str__(self):
