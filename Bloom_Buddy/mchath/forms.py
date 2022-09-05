@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 
 class createuserform(UserCreationForm):
     class Meta:
-        model=info
-        fields="__all__"
+        model=setup
+        fields=['caregiver_name', 'child_age', 'child_name', 'relation_to_child', 'caregiver_email', 'caregiver_phone', 'date' ]
 
-class testform(ModelForm):
+class quizform(ModelForm):
     class Meta:
-        model=test
+        model=quiz
         fields="__all__"

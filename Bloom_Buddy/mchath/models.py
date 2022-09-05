@@ -3,21 +3,23 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class info(models.Model):
-    childname = models.OneToOneField(User, max_length= 200, null =  False, blank = False, on_delete=models.CASCADE)
-    childage = models.PositiveIntegerField()
-    caregivername = models.CharField(max_length= 200, null =  False, blank = False)
-    relationtochild = models.CharField(max_length= 200, null =  False, blank = False)
-    caregiveremail = models.EmailField( max_length=50, db_index=True, unique=True)
-    caregiverphone = models.BigIntegerField()
+class setup(models.Model):
+    caregiver_name = models.CharField(max_length= 200, null =  False, blank = False)
+    child_age = models.PositiveIntegerField()
+    child_name = models.CharField(max_length= 200, null =  False, blank = False)
+    relation_to_child = models.CharField(max_length= 200, null =  False, blank = False)
+    caregiver_email = models.EmailField( max_length=50, db_index=True, unique=True)
+    caregiver_phone = models.BigIntegerField()
     date = models.DateField(null=True, blank=True)
+    score = models.IntegerField(null = True, blank= True)
+    USERNAME_FIELD = 'username'
 
 
     def __str__(self):
         return self.childname
 
 
-class test(models.Model):
+class quiz(models.Model):
     question = models.CharField(max_length=200,null=True)
     yes = models.TextField(max_length= 3, null =  False, blank = False, default='Yes')
     no = models.TextField(max_length= 3, null =  False, blank = False, default='No')

@@ -6,11 +6,42 @@ from .models import *
 from django.http import HttpResponse
 
 # Create your views here.
+# def registerPage(request):
+#     if request.method == 'POST':
+#             setup.objects.create(
+#                 caregiver_name = request.POST.get['caregiver_name'],
+#                 child_age = request.POST.get['child_age'],
+#                 child_name = request.POST.get['child_name'],
+#                 caregiver_email = request.POST.get['caregiver_email'],
+#                 caregiver_phone = request.POST.get['caregiver_phone'],
+#                 date = request.POST.get['date'])
+                
+#     return redirect('mchat')
+
+def registerPage(request):
+    if setup.objects.filter(caregiver_email=True).exists():
+        if setup.objects.filter(caregiver_phone=True).exists():
+            
+            return redirect('mchat')        
+    else:  
+        form = createuserform()
+    if request.method=='POST':
+        form = createuserform(request.POST)
+        if form.is_valid() :
+            user=form.save()
+            return redirect('login')
+    context={
+            'form':form,
+        }
+    return render(request,'signinfo.html',context)
 
 def mchat(request):
+    return render(request, 'mchat-survey.html')
+
+def quiz(request):
     if request.method == 'POST':
         print(request.POST)
-        questions=test.objects.all()
+        questions=quiz.objects.all()
         score = 0
         # wrong=0
         # correct=0
@@ -29,15 +60,18 @@ def mchat(request):
             'total':total,
             'score': score
         }
-        return render(request,
-        # 'test/result.html',
-        context)
+        return render(
+            request,
+            'mchat-results-page.html',
+            context
+            )
     else:
-        questions=test.objects.all()
+        questions=quiz.objects.all()
         context = {
             'questions':questions
         }
 
-    return render(request,
-        # 'test/home.html', 
-        context)
+    return render(request, 'mchat-survey.html', context)
+
+def instruction(request):
+    return render(request, 'instruction.html')

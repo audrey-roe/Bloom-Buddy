@@ -30,6 +30,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Allows me to restrict new accounts from being created just by adding REGISTRATION_OPEN = False
+REGISTRATION_OPEN = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
     # 'ckeditor',
     'mchat',
     'lms',
+    'mchath',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +69,7 @@ ROOT_URLCONF = 'Bloom_Buddy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'], # Add templates directory to the list
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,13 +130,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS=[os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS=[os.path.join(BASE_DIR, '/static')]
 
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 
 
 # MESSAGE_TAGS = {
