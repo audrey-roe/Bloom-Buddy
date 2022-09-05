@@ -1,0 +1,354 @@
+.mchat-buttons-container {
+  display: flex;
+  position: relative;
+}
+.mchat-buttons-button {
+  color: rgba(0, 0, 0, 0.72);
+  width: 11.875rem;
+  cursor: pointer;
+  position: relative;
+  align-self: center;
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  text-align: center;
+  transition: 0.3s;
+  padding-top: 0.75rem;
+  border-width: 0px;
+  border-radius: 10px;
+  padding-bottom: 0.75rem;
+  background-color: var(--dl-color-purples-700);
+}
+.mchat-buttons-button:hover {
+  color: #ffffff;
+  background-color: var(--dl-color-purples-100);
+}
+.mchat-buttons-root-class-name {
+  left: 0px;
+  right: 0px;
+  bottom: 40px;
+  position: static;
+  align-self: center;
+  margin-bottom: 30px;
+}
+.mchat-buttons-root-class-name1 {
+  top: 420px;
+  left: 63px;
+  position: absolute;
+}
+.mchat-buttons-root-class-name2 {
+  top: 420px;
+  right: 63px;
+  position: absolute;
+}
+.mchat-buttons-root-class-name3 {
+  position: static;
+}
+.mchat-buttons-root-class-name4 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name5 {
+  position: static;
+}
+.mchat-buttons-root-class-name6 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name7 {
+  position: static;
+}
+.mchat-buttons-root-class-name8 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name9 {
+  position: static;
+}
+.mchat-buttons-root-class-name10 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name11 {
+  position: static;
+}
+.mchat-buttons-root-class-name12 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name13 {
+  position: static;
+}
+.mchat-buttons-root-class-name14 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name15 {
+  position: static;
+}
+.mchat-buttons-root-class-name16 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name17 {
+  left: 0px;
+  right: 0px;
+  bottom: 40px;
+  position: static;
+  align-self: center;
+  margin-bottom: 30px;
+}
+.mchat-buttons-root-class-name18 {
+  left: 0px;
+  right: 0px;
+  bottom: 40px;
+  position: static;
+  align-self: center;
+  margin-top: var(--dl-space-space-twounits);
+}
+.mchat-buttons-root-class-name19 {
+  position: static;
+}
+.mchat-buttons-root-class-name20 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name21 {
+  position: static;
+}
+.mchat-buttons-root-class-name22 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name23 {
+  position: static;
+}
+.mchat-buttons-root-class-name24 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name25 {
+  position: static;
+}
+.mchat-buttons-root-class-name26 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name27 {
+  position: static;
+}
+.mchat-buttons-root-class-name28 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name29 {
+  position: static;
+}
+.mchat-buttons-root-class-name30 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name31 {
+  position: static;
+}
+.mchat-buttons-root-class-name32 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+.mchat-buttons-root-class-name33 {
+  position: static;
+}
+.mchat-buttons-root-class-name34 {
+  top: 420px;
+  right: 63px;
+  position: static;
+}
+@media(max-width: 481px) {
+  .mchat-buttons-container {
+    align-items: flex-start;
+  }
+  .mchat-buttons-button {
+    width: 10rem;
+  }
+  .mchat-buttons-root-class-name {
+    margin-bottom: var(--dl-space-space-oneandhalfunits);
+  }
+  .mchat-buttons-root-class-name1 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 8rem;
+  }
+  .mchat-buttons-root-class-name2 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 8rem;
+  }
+  .mchat-buttons-root-class-name3 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name4 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name5 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name6 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name7 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name8 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name9 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name10 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name11 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name12 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name13 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name14 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name15 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name16 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name17 {
+    margin-bottom: var(--dl-space-space-oneandhalfunits);
+  }
+  .mchat-buttons-root-class-name18 {
+    margin-bottom: var(--dl-space-space-oneandhalfunits);
+  }
+  .mchat-buttons-root-class-name19 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name20 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name21 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name22 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name23 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name24 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name25 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name26 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name27 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name28 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name29 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name30 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name31 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name32 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name33 {
+    top: 400px;
+    left: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+  .mchat-buttons-root-class-name34 {
+    top: 400px;
+    right: var(--dl-space-space-unit);
+    width: 7rem;
+  }
+}

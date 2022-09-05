@@ -1,0 +1,36 @@
+*, html, body {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+}
+body .mchat-survey {
+  max-width: 70%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 5 10 3 rgba(229, 218, 255, 0.63);
+  padding: 5%;
+}
+body .mchat-survey .slide {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+body .mchat-survey .slide header {
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+}
+body .mchat-survey .slide header a {
+  font-family: "Playfair Display", sans-serif;
+  font-size: 1.5em;
+}
+body .mchat-survey .slide header a :hover {
+  color: var();
+}/*# sourceMappingURL=mchat.css.map */
