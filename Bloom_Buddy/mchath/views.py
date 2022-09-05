@@ -9,32 +9,30 @@ from django.http import HttpResponse
 def registerPage(request):
     return render(request, 'signinfo.html')
 
-# def registerPage(request):
-#     if setup.objects.filter(caregiver_email=True).exists():
-#         if setup.objects.filter(caregiver_phone=True).exists():
-            
-#             return redirect('quizz')        
+# def registerPage_post(request):
+#     return redirect('quizz')        
 #     else:  
-#         #     form = createuserform(request.POST)
-        #     if form.is_valid() :
-        #        customers=form.save()
-        #     return redirect('quizz')
-        # context={
-        #     'form':form,
-        # }
-        
-        # return render(request, 'quiz.html', context)
+#         form = createuserform()
+#         if request.method=='POST':
+#             form = createuserform(request.POST)
+#             if form.is_valid() :
+#                 user=form.save()
+#                 return redirect('login')
+#         context={
+#             'form':form,
+#         }
+#         return render(request, 'quiz.html', context)
             
 
 def registerPage_post(request):            
         if request.method=='POST':
             customer.objects.create(
-                caregiver_name = request.data['caregiver_name', ],
-                child_age = request.data['child_age'],
-                child_name = request.data['child_name'],
-                caregiver_email = request.data['caregiver_email'],
-                caregiver_phone = int(f"234{(request.data['phone'].replace('+','')).replace('234234','').replace('234','')}"),
-                date = request.data['date'],)
+                caregiver_name = request.POST['caregiver_name', ],
+                child_age = request.POST['child_age'],
+                child_name = request.POST['child_name'],
+                caregiver_email = request.POST['caregiver_email'],
+                caregiver_phone = int(f"234{(request.POST['phone'].replace('+','')).replace('234234','').replace('234','')}"),
+                date = request.POST['date'],)
 
         return render(request, 'quiz.html')    
 
