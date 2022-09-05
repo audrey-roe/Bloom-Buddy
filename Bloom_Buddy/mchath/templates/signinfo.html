@@ -75,13 +75,14 @@
             />
             </header>
             <div class="mchat-survey-container004">
-                <form method="POST" action="{{action}}" >
+                <form method="POST" action="/registerPage_post/" >
                     {% csrf_token %}
                     <div id="info-form" class="mchat-survey-container005 step">
                         <h1 class="h3">Please, tell us a bit about yourself</h1>
-                        <!-- {{form.as_p}} -->
 
                             <div class="mchat-survey-container006">
+                                <!-- {{form.as_p}} -->
+
                                 <div>
                                     <label class="mchat-survey-text016">
                                         <span>Child&apos;s Name</span>

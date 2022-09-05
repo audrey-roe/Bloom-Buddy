@@ -3,5 +3,5 @@ from .models import *
 
 # Register your models here.
 
-admin.site.register(setup)
+admin.site.register(customer)
 admin.site.register(quiz)

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class createuserform(UserCreationForm):
     class Meta:
-        model=setup
+        model=customer
         fields=['caregiver_name', 'child_age', 'child_name', 'relation_to_child', 'caregiver_email', 'caregiver_phone', 'date' ]
 
 class quizform(ModelForm):
