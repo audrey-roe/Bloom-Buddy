@@ -7,7 +7,7 @@ from django.urls import path
 
 urlpatterns = [
     path('mchat/', views.mchat, name='mchat'),
-    path('quiz/', views.quiz, name='quiz'),
+    path('quizz/', views.quizz, name='quizz'),
     path('instruction/', views.instruction, name='instruction'),
     path('registerPage/', views.registerPage, name='registerPage'),
 ]
