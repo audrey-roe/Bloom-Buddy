@@ -22,15 +22,17 @@ from django.http import HttpResponse
 #     return render(request, 'signinfo.html', context)
 def registerPage(request):
     if request.method == 'POST':     
-        customer.objects.create(
-                caregiver_name = request.POST['caregiver_name'],
-                child_age = request.POST['child_age'].replace(' Months',''),
-                child_name = request.POST['child_name'],
-                caregiver_email = request.POST['caregiver_email'],
-                caregiver_phone = int(f"234{(request.POST['phone'].replace('+','')).replace('234234','').replace('234','')}"),
-                date = request.POST['date'],)
+        # if not customer.objects.filter(caregiver_email = request.POST.get['caregiver_email']).exists():
+            return redirect (quizz)
+            customer.objects.create(
+                    caregiver_name = request.POST['caregiver_name'],
+                    child_age = request.POST['child_age'].replace(' Months',''),
+                    child_name = request.POST['child_name'],
+                    caregiver_email = request.POST['caregiver_email'],
+                    caregiver_phone = int(f"234{(request.POST['phone'].replace('+','')).replace('234234','').replace('234','')}"),
+                    date = request.POST['date'],)
 
-        return redirect(quizz)
+    # return redirect(quizz)
     else:
         return render(request, 'signinfo.html')
 
@@ -64,7 +66,7 @@ def quizz(request):
         }
         return render(
             request,
-            'mchat-results-page.html',
+            'quiz.html',
             context
             )
     else:
@@ -73,5 +75,5 @@ def quizz(request):
             'questions':questions
         }
     
-    return render(request, 'quiz.html', context)
+    return render(request, 'mchat-results-page.html', context)
 
