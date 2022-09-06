@@ -1,4 +1,5 @@
 # Create your views here.
+from django.http import Http404
 from django.shortcuts import redirect,render
 from django.contrib.auth import login,logout,authenticate
 from .forms import createuserform, quizform
@@ -6,35 +7,31 @@ from .models import quiz, customer
 from django.http import HttpResponse
 
 # Create your views here.
-def registerPage(request):
-    return render(request, 'signinfo.html')
+# def registerPage(request):
+#     return render(request, 'signinfo.html')
 
-# def registerPage_post(request):
-#     return redirect('quizz')        
-#     else:  
-#         form = createuserform()
-#         if request.method=='POST':
-#             form = createuserform(request.POST)
-#             if form.is_valid() :
-#                 user=form.save()
-#                 return redirect('login')
-#         context={
-#             'form':form,
-#         }
-#         return render(request, 'quiz.html', context)
+def registerPage(request):
+    if request.POST:
+        form = createuserform(request.POST, request.FILES)
+        print = (request.FILES)
+        if form.is_valid():
+            form.save()
+        return redirect(quizz)
+    return render(request, 'signinfo.html', { 'form': createuserform})
             
 
-def registerPage_post(request):            
-        if request.method=='POST':
-            customer.objects.create(
-                caregiver_name = request.POST['caregiver_name', ],
-                child_age = request.POST['child_age'],
-                child_name = request.POST['child_name'],
-                caregiver_email = request.POST['caregiver_email'],
-                caregiver_phone = int(f"234{(request.POST['phone'].replace('+','')).replace('234234','').replace('234','')}"),
-                date = request.POST['date'],)
+# def registerPage_post(request):            
+#         if request.method=='POST':
+#             customer.objects.create(
+#                 caregiver_name = request.POST['caregiver_name'],
+#                 child_age = request.POST['child_age'],
+#                 child_name = request.POST['child_name'],
+#                 relation_to_child = request.POST['relation_to_child'],
+#                 caregiver_email = request.POST['caregiver_email'],
+#                 caregiver_phone = int(f"234{(request.POST['phone'].replace('+','')).replace('234234','').replace('234','')}"),
+#                 date = request.POST['date'],)
 
-        return render(request, 'quiz.html')    
+#         return render(request, 'quiz.html')    
 
 def mchat(request):
     return render(request, 'mchat-survey.html')

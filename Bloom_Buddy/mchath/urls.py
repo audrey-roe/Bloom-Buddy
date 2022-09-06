@@ -10,5 +10,5 @@ urlpatterns = [
     path('quizz/', views.quizz, name='quizz'),
     path('instruction/', views.instruction, name='instruction'),
     path('registerPage/', views.registerPage, name='registerPage'),
-    path('registerPage_post/', views.registerPage_post, name='registerPage_post'),
+    # path('registerPage_post/', views.registerPage_post, name='registerPage_post'),
 ]

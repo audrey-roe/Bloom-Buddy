@@ -52,30 +52,27 @@
     <link rel="stylesheet" href=".css/style.css" />
     </head>
     <body>
-
+        <div>
         <div class="mchat-survey-container">
-            <header
-            class="mchat-header-h-e-a-d-e-r mchat-header mchat-header-root-class-name5"
-          >
-            <a
-              href="https://thebloombuddy.com"
-              target="_blank"
-              rel="noreferrer noopener"
-              class="mchat-header-link"
-            >
-            <span> RETURN HOME</span>
-            </a>
-            <img
-              id="bloombuddy-logo"
-              alt="darklogotransparentstraightlineCopy3573"
-              src="{% static 'media/no bg dark_logo_transparent_straightline_1-200h.png' %}"
-              loading="eager"
-              class="logo mchat-header-darklogotransparentstraightline-copy"
-              
-            />
-            </header>
-            <div class="mchat-survey-container004">
-                <form method="POST" action="/registerPage_post/" >
+            
+            <div id="mchat-index" class="mchat-survey-container001 active step">
+                        <header class="mchat-header-h-e-a-d-e-r mchat-header mchat-header-root-class-name5">
+                    <a
+                    href="https://thebloombuddy.com"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    class="mchat-header-link"
+                    > RETURN HOME
+                    </a>
+                    <img
+                    id="bloombuddy-logo"
+                    alt="darklogotransparentstraightlineCopy3573"
+                    src="{% static 'media/no bg dark_logo_transparent_straightline_1-200h.png' %}"
+                    loading="eager"
+                    class="logo mchat-header-darklogotransparentstraightline-copy"
+                    />
+                    </header>
+                    <form method="POST" action="{% url 'registerPage'%}" enctype="multipart/form-data" >
                     {% csrf_token %}
                     <div id="info-form" class="mchat-survey-container005 step">
                         <h1 class="h3">Please, tell us a bit about yourself</h1>
@@ -93,6 +90,7 @@
                                         required
                                         autocomplete="on"
                                         class="mchat-survey-textinput input"
+                                        id="child-name"
                                     />
                                 </div>
                                 <div class="mchat-survey-container008">
@@ -100,7 +98,7 @@
                                         <span>Child&apos;s Age</span>
                                         <span class="mchat-survey-text021">*</span>
                                     </label>
-                                    <select required class="mchat-survey-select">
+                                    <select id = child_age, required class="mchat-survey-select">
                                         <option value="-Select-">-Select-</option>
                                         <option value="16 Months">16 Months</option>
                                         <option value="17 Months">17 Months</option>
@@ -124,12 +122,13 @@
                                     <span>Caregiver&apos;s Name</span>
                                     <span class="mchat-survey-text024">*</span>
                                     </label>
-                                    <input
-                                    type="text"
-                                    required
-                                    autocomplete="name"
-                                    class="mchat-survey-textinput1 input"
-                                    />
+                                        <input
+                                        type="text"
+                                        id = "caregiver_name"
+                                        required
+                                        autocomplete="name"
+                                        class="mchat-survey-textinput1 input"
+                                        />
                                 </div>
                                 <div class="mchat-survey-container010">
                                     <label class="mchat-survey-text025">
@@ -138,6 +137,7 @@
                                     </label>
                                     <input
                                     type="text"
+                                    id = "relation_to_child"
                                     required
                                     autocomplete="on"
                                     class="mchat-survey-textinput2 input"
@@ -150,6 +150,7 @@
                                     </label>
                                     <input
                                     type="text"
+                                    id = "caregiver_email"
                                     required
                                     autocomplete="email"
                                     class="mchat-survey-textinput3 input"
@@ -162,6 +163,7 @@
                                     </label>
                                     <input
                                     type="tel"
+                                    id = "caregiver_phone"
                                     required
                                     autocomplete="tel"
                                     class="mchat-survey-textinput4 input"
@@ -174,6 +176,7 @@
                                     </label>
                                     <input
                                     type="datetime-local"
+                                    id = "date"
                                     required
                                     class="mchat-survey-textinput5 input"
                                     />
@@ -183,9 +186,11 @@
                                 <div
                                     class="mchat-buttons-container mchat-buttons-root-class-name21"
                                 >
-                                    <button type="submit" class="mchat-buttons-button content prev-btn">
+                                <a href="/instruction">
+                                    <button type="button" class="mchat-buttons-button content prev-btn">
                                     <span>Previous</span>
                                     </button>
+                                </a>
                                 </div>
                                 <div
                                     class="mchat-buttons-container mchat-buttons-root-class-name22"
@@ -203,5 +208,6 @@
                     </div>
                 </form>
             </div>
-
+        </div>
+        </div>
     </body>

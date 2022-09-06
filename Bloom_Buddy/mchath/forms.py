@@ -1,9 +1,18 @@
 from django.forms import ModelForm
-from .models import *
+from django import forms
+from .models import customer, quiz
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 class createuserform(UserCreationForm):
+    caregiver_name = forms.CharField()
+    child_age = forms.IntegerField()
+    child_name = forms.CharField()
+    relation_to_child = forms.CharField()
+    caregiver_email = forms.EmailField()
+    caregiver_phone = forms.IntegerField()
+    date = forms.DateTimeField()
+    USERNAME_FIELD = 'username'
     class Meta:
         model=customer
         fields=['caregiver_name', 'child_age', 'child_name', 'relation_to_child', 'caregiver_email', 'caregiver_phone', 'date' ]
