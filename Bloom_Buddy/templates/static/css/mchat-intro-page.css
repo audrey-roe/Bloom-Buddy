@@ -1,0 +1,230 @@
+.mchat-header-h-e-a-d-e-r {
+  position: relative;
+  margin-top: 0px;
+  margin-bottom: var(--dl-space-space-twounits);
+  padding-right: 25px;
+  justify-content: space-between;
+}
+.mchat-header-link {
+  cursor: pointer;
+  font-style: normal;
+  transition: 0.3s;
+  font-family: Playfair Display;
+  font-weight: 700;
+  margin-left: -25px;
+  text-decoration: none;
+}
+.mchat-header-link:hover {
+  color: var(--dl-color-pinks-100);
+  font-size: 1rem;
+}
+.mchat-header-darklogotransparentstraightline-copy {
+  width: auto;
+  height: 80%;
+}
+.mchat-header-root-class-name {
+  align-self: flex-start;
+}
+.mchat-header-root-class-name1 {
+  align-self: flex-start;
+}
+.mchat-header-root-class-name2 {
+  align-self: flex-start;
+}
+.mchat-header-root-class-name3 {
+  align-self: flex-start;
+}
+.mchat-header-root-class-name5 {
+  display: none;
+  align-self: flex-start;
+}
+.mchat-header-root-class-name6 {
+  align-self: flex-start;
+  margin-bottom: var(--dl-space-space-unit);
+}
+.mchat-header-root-class-name7 {
+  align-self: flex-start;
+}
+.mchat-header-root-class-name8 {
+  align-self: flex-start;
+}
+.mchat-header-root-class-name9 {
+  align-self: flex-start;
+  margin-left: var(--dl-space-space-unit);
+}
+.mchat-header-root-class-name10 {
+  align-self: flex-start;
+  margin-left: var(--dl-space-space-unit);
+}
+.mchat-header-root-class-name11 {
+  align-self: flex-start;
+  margin-left: var(--dl-space-space-unit);
+}
+.mchat-header-root-class-name12 {
+  align-self: flex-start;
+  margin-left: var(--dl-space-space-unit);
+}
+.mchat-header-root-class-name13 {
+  align-self: flex-start;
+  margin-left: var(--dl-space-space-unit);
+}
+.mchat-header-root-class-name14 {
+  align-self: flex-start;
+  margin-left: var(--dl-space-space-unit);
+}
+.mchat-header-root-class-name4 {
+  align-self: flex-start;
+}
+.mchat-header-root-class-name15 {
+  align-self: flex-start;
+}
+.mchat-header-root-class-name16 {
+  align-self: flex-start;
+}
+@media(max-width: 481px) {
+  .mchat-header-h-e-a-d-e-r {
+    margin-top: 0px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mchat-header-link {
+    font-size: 0.7rem;
+  }
+  .mchat-header-darklogotransparentstraightline-copy {
+    right: 1px;
+    width: 150px;
+  }
+}
+
+.mchat-page-numbers-container {
+  display: flex;
+  position: relative;
+}
+.mchat-page-numbers-text {
+  width: 600px;
+  font-size: 0.8em;
+  text-align: right;
+  padding-right: var(--dl-space-space-twounits);
+}
+
+.mchat-intro-page-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  padding-top: var(--dl-space-space-twounits);
+  flex-direction: column;
+}
+.mchat-intro-page-container1 {
+  width: 600px;
+  height: auto;
+  display: flex;
+  align-self: center;
+  box-shadow: 0px 5px 10px 3px rgba(229, 218, 255, 0.63);
+  margin-top: var(--dl-space-space-oneandhalfunits);
+  align-items: center;
+  padding-top: var(--dl-space-space-twounits);
+  padding-left: var(--dl-space-space-unit);
+  border-radius: 10px;
+  margin-bottom: var(--dl-space-space-threeunits);
+  padding-right: var(--dl-space-space-halfunit);
+  flex-direction: column;
+  padding-bottom: 0px;
+  justify-content: center;
+}
+.mchat-intro-page-text {
+  font-size: 2em;
+  font-family: Playfair Display;
+  font-weight: 700;
+  line-height: 1.15;
+  text-transform: none;
+  text-decoration: none;
+}
+.mchat-intro-page-image {
+  width: 240px;
+  margin-top: var(--dl-space-space-unit);
+  object-fit: cover;
+}
+.mchat-intro-page-text1 {
+  font-size: 1.5em;
+  margin-top: var(--dl-space-space-twounits);
+  text-align: center;
+  font-family: Playfair Display;
+  font-weight: 700;
+  line-height: 1.15;
+  padding-left: var(--dl-space-space-oneandhalfunits);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+  text-transform: none;
+  text-decoration: none;
+}
+.mchat-intro-page-text2 {
+  margin-top: var(--dl-space-space-unit);
+  padding-left: var(--dl-space-space-oneandhalfunits);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.mchat-intro-page-navlink {
+  color: var(--dl-color-gray-white);
+  width: 11.875rem;
+  cursor: pointer;
+  position: relative;
+  font-size: 1em;
+  align-self: center;
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  margin-top: var(--dl-space-space-twounits);
+  text-align: center;
+  transition: 0.3s;
+  font-family: Poppins;
+  font-weight: 400;
+  line-height: 1.15;
+  padding-top: 0.75rem;
+  border-width: 0px;
+  border-radius: 10px;
+  padding-bottom: 0.75rem;
+  text-transform: none;
+  text-decoration: none;
+  background-color: #6c40d2;
+}
+.mchat-intro-page-navlink:hover {
+  background-color: var(--dl-color-purples-300);
+}
+.mchat-intro-page-text3 {
+  font-size: 0.7rem;
+  margin-top: var(--dl-space-space-twounits);
+  margin-bottom: var(--dl-space-space-twounits);
+}
+
+
+
+@media(max-width: 481px) {
+  .mchat-intro-page-container1 {
+    width: 80%;
+    padding-left: var(--dl-space-space-twounits);
+    padding-right: var(--dl-space-space-twounits);
+  }
+  .mchat-intro-page-text {
+    font-size: 1.5em;
+    text-align: center;
+  }
+  .mchat-intro-page-image {
+    margin-top: var(--dl-space-space-unit);
+  }
+  .mchat-intro-page-text1 {
+    font-size: 1.2em;
+  }
+  .mchat-intro-page-text2 {
+    margin-top: var(--dl-space-space-unit);
+    text-align: justify;
+  }
+  .mchat-intro-page-navlink {
+    color: var(--dl-color-gray-white);
+    font-style: normal;
+    font-weight: 500;
+    background-color: var(--dl-color-purples-100);
+  }
+  .mchat-intro-page-text3 {
+    font-size: 0.5rem;
+    margin-top: var(--dl-space-space-twounits);
+    margin-bottom: 0px;
+  }
+}
