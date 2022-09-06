@@ -141,11 +141,11 @@
                         <span>Previous</span>
                       </button>
                     </div>
-                    <a href="#survey-slide-2" class="mchat-survey-link1">
+                    <a href="#survey-slide-2" class="mchat-survey-link1" >
                       <div
                         class="mchat-buttons-container mchat-buttons-root-class-name24"
                       >
-                        <button class="mchat-buttons-button content next-btn">
+                        <button class="mchat-buttons-button content next-btn" id = "#btnNext1">
                           <span>Next</span>
                         </button>
                       </div>
@@ -236,7 +236,7 @@
                       <div
                         class="mchat-buttons-container mchat-buttons-root-class-name26"
                       >
-                        <button type="submit" class="mchat-buttons-button content">
+                        <button type="submit" class="mchat-buttons-button content" id = "#btnNext2">
                           <span>Next</span>
                         </button>
                       </div>
@@ -625,3 +625,14 @@
         </form>
     </div>
   </body>
+
+$('#btnNext1').click(function() {
+    $('#survey-slide-1').hide('fast', function() {
+        $('#survey-slide-2').show('fast');
+    });
+});
+('#btnNext2').click(function() {
+  $('#survey-slide-2').hide('fast', function() {
+      $('#survey-slide-3').show('fast');
+  });
+});

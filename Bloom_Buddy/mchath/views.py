@@ -7,8 +7,6 @@ from .models import quiz, customer
 from django.http import HttpResponse
 
 # Create your views here.
-# def registerPage(request):
-#     return render(request, 'signinfo.html')
 
 def registerPage(request):
     if request.POST:
@@ -18,20 +16,7 @@ def registerPage(request):
             form.save()
         return redirect(quizz)
     return render(request, 'signinfo.html', { 'form': createuserform})
-            
-
-# def registerPage_post(request):            
-#         if request.method=='POST':
-#             customer.objects.create(
-#                 caregiver_name = request.POST['caregiver_name'],
-#                 child_age = request.POST['child_age'],
-#                 child_name = request.POST['child_name'],
-#                 relation_to_child = request.POST['relation_to_child'],
-#                 caregiver_email = request.POST['caregiver_email'],
-#                 caregiver_phone = int(f"234{(request.POST['phone'].replace('+','')).replace('234234','').replace('234','')}"),
-#                 date = request.POST['date'],)
-
-#         return render(request, 'quiz.html')    
+              
 
 def mchat(request):
     return render(request, 'mchat-survey.html')
@@ -63,7 +48,7 @@ def quizz(request):
         }
         return render(
             request,
-            'mchat-results-page.html',
+            'quiz.html',
             context
             )
     else:
@@ -72,5 +57,5 @@ def quizz(request):
             'questions':questions
         }
     
-    return render(request, 'quiz.html', context)
+    return render(request, 'mchat-results-page.html', context)
 
