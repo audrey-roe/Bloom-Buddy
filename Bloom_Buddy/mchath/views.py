@@ -1,6 +1,7 @@
 # Create your views here.
 from django.http import Http404
 from django.shortcuts import redirect,render
+from django.core.paginator import Paginator
 from django.contrib.auth import login,logout,authenticate
 from .forms import createcustomerform, quizform
 from .models import quiz, customer
