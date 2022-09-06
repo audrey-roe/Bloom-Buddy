@@ -10,7 +10,7 @@ class customer(models.Model):
     relation_to_child = models.CharField(max_length= 200)
     caregiver_email = models.EmailField( max_length=50)
     caregiver_phone = models.BigIntegerField()
-    date = models.DateTimeField(auto_now_add=False, )
+    date = models.DateField(auto_now_add=True, )
     score = models.IntegerField()
     USERNAME_FIELD = 'username'
 
