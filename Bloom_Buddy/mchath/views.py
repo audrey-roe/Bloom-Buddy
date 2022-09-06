@@ -23,13 +23,11 @@ def registerPage(request):
     if request.method == 'POST':     
         customer.objects.create(
                 caregiver_name = request.POST['caregiver_name'],
-                child_age = request.POST['child_age'].replace('Months',''),
+                child_age = request.POST['child_age'].replace(' Months',''),
                 child_name = request.POST['child_name'],
                 caregiver_email = request.POST['caregiver_email'],
-                # caregiver_phone = int(f"234{(request.POST['phone'].replace('+','')).replace('234234','').replace('234','')}"),
-                caregiver_phone = request.POST['phone'],
-                # date = request.POST['date'],
-                )
+                caregiver_phone = int(f"234{(request.POST['phone'].replace('+','')).replace('234234','').replace('234','')}"),
+                date = request.POST['date'],)
 
         return redirect(quizz)
     else:

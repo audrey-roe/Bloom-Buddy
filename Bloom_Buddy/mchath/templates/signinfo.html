@@ -1,5 +1,6 @@
 <!DOCTYPE html> {% load static %}
 <html lang="english">
+
 <head>
     <title>M-CHAT-R™ SURVEY</title>
     <meta property="og:title" content="exported project" />
@@ -7,6 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content="mchat-results-page - exported project" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <meta property="twitter:card" content="summary_large_image" />
@@ -17,17 +19,17 @@
         html {
             line-height: 1.15;
         }
-
+        
         body {
             margin: 0;
         }
-
+        
         * {
             box-sizing: border-box;
             border-width: 0;
             border-style: solid;
         }
-
+        
         p,
         li,
         ul,
@@ -42,7 +44,7 @@
             margin: 0;
             padding: 0;
         }
-
+        
         button,
         input,
         optgroup,
@@ -53,19 +55,19 @@
             line-height: 1.15;
             margin: 0;
         }
-
+        
         button,
         select {
             text-transform: none;
         }
-
+        
         button,
         [type="button"],
         [type="reset"],
         [type="submit"] {
             -webkit-appearance: button;
         }
-
+        
         button::-moz-focus-inner,
         [type="button"]::-moz-focus-inner,
         [type="reset"]::-moz-focus-inner,
@@ -73,36 +75,37 @@
             border-style: none;
             padding: 0;
         }
-
+        
         button:-moz-focus,
         [type="button"]:-moz-focus,
         [type="reset"]:-moz-focus,
         [type="submit"]:-moz-focus {
             outline: 1px dotted ButtonText;
         }
-
+        
         a {
             color: inherit;
             text-decoration: inherit;
         }
-
+        
         input {
             padding: 2px 4px;
         }
-
+        
         img {
             display: block;
         }
-
+        
         html {
             scroll-behavior: smooth
         }
-    
+    </style>
+    <style data-tag="default-style-sheet">
         html {
             font-family: Poppins;
             font-size: 1em;
         }
-
+        
         body {
             font-weight: 400;
             font-style: normal;
@@ -114,15 +117,16 @@
             background-color: var(--dl-color-gray-white);
         }
     </style>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" data-tag="font" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" data-tag="font" />
-        <link rel="stylesheet" href=".css/style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" data-tag="font" />
+
+    <link rel="stylesheet" href=".css/style.css" />
 </head>
-    
+
 <body>
     <div>
         <div class="mchat-survey-container">
-            
+
             <div id="mchat-index" class="mchat-survey-container001 active step">
                 <header class="mchat-header-h-e-a-d-e-r mchat-header mchat-header-root-class-name5">
                     <a href="https://thebloombuddy.com" target="_blank" rel="noreferrer noopener" class="mchat-header-link"> RETURN HOME
@@ -133,21 +137,23 @@
                     {%csrf_token%}
                     <div id="info-form" class="mchat-survey-container005 step">
                         <h1 class="h3">Please, tell us a bit about yourself</h1>
-                            <div class="mchat-survey-container006">
-                                <!-- {{form.as_p}} -->
-                                <div>
-                                    <label class="mchat-survey-text016">
+
+                        <div class="mchat-survey-container006">
+                            <!-- {{form.as_p}} -->
+
+                            <div>
+                                <label class="mchat-survey-text016">
                                         <span>Child&apos;s Name</span>
                                         <span class="mchat-survey-text018">*</span>
                                     </label>
-                                    <input type="text" required autocomplete="on" class="mchat-survey-textinput input" name="child_name" />
-                                </div>
-                                <div class="mchat-survey-container008">
-                                    <label class="mchat-survey-text019">
+                                <input type="text" required autocomplete="on" class="mchat-survey-textinput input" name="child_name" />
+                            </div>
+                            <div class="mchat-survey-container008">
+                                <label class="mchat-survey-text019">
                                         <span>Child&apos;s Age</span>
                                         <span class="mchat-survey-text021">*</span>
                                     </label>
-                                    <select name='child_age' required class="mchat-survey-select">
+                                <select name='child_age' required class="mchat-survey-select">
                                         <option value="-Select-">-Select-</option>
                                         <option value="16 Months">16 Months</option>
                                         <option value="17 Months">17 Months</option>
@@ -165,67 +171,64 @@
                                         <option value="29 Months">29 Months</option>
                                         <option value="30 Months">30 Months</option>
                                     </select>
-                                </div>
-                                <div class="mchat-survey-container009">
-                                    <label class="mchat-survey-text022">
+                            </div>
+                            <div class="mchat-survey-container009">
+                                <label class="mchat-survey-text022">
                                     <span>Caregiver&apos;s Name</span>
                                     <span class="mchat-survey-text024">*</span>
                                     </label>
-                                    <input type="text" name="caregiver_name" required autocomplete="name" class="mchat-survey-textinput1 input" />
-                                </div>
-                                <div class="mchat-survey-container010">
-                                    <label class="mchat-survey-text025">
+                                <input type="text" name="caregiver_name" required autocomplete="name" class="mchat-survey-textinput1 input" />
+                            </div>
+                            <div class="mchat-survey-container010">
+                                <label class="mchat-survey-text025">
                                     <span>Relationship to Child</span>
                                     <span class="mchat-survey-text027">*</span>
                                     </label>
-                                    <input type="text" name="relation_to_child" required autocomplete="on" class="mchat-survey-textinput2 input" />
+                                <input type="text" name="relation_to_child" required autocomplete="on" class="mchat-survey-textinput2 input" />
                             </div>
                             <div class="mchat-survey-container011">
                                 <label class="mchat-survey-text028">
                                     <span>Caregiver&apos;s E-mail</span>
                                     <span class="mchat-survey-text030">*</span>
                                     </label>
-                                    <input type="text" name="caregiver_email" required autocomplete="email" class="mchat-survey-textinput3 input" />
+                                <input type="text" name="caregiver_email" required autocomplete="email" class="mchat-survey-textinput3 input" />
                             </div>
                             <div class="mchat-survey-container012">
                                 <label class="mchat-survey-text031">
                                     <span>Caregiver&apos;s Phone Number</span>
                                     <span class="mchat-survey-text033">*</span>
                                     </label>
-                                    <input type="tel" name="phone" required autocomplete="tel" class="mchat-survey-textinput4 input" />
+                                <input type="tel" name="phone" required autocomplete="tel" class="mchat-survey-textinput4 input" />
                             </div>
                             <div class="mchat-survey-container013">
                                 <label class="mchat-survey-text034">
                                     <span>Today&apos;s Date</span>
                                     <span class="mchat-survey-text036">*</span>
                                     </label>
-                                    <input type="tel" name="date" required autocomplete="tel" class="mchat-survey-textinput4 input"/>
-                                <div class="mchat-survey-container013">
-                                    <label class="mchat-survey-text034">
-                                </div>
+                                <input type="datetime-local" name="date" required class="mchat-survey-textinput5 input" />
                             </div>
-                            <div class="mchat-survey-container014">
-                                <div class="mchat-buttons-container mchat-buttons-root-class-name21">
+                        </div>
+                        <div class="mchat-survey-container014">
+                            <div class="mchat-buttons-container mchat-buttons-root-class-name21">
                                 <a href="/instruction">
                                     <button type="button" class="mchat-buttons-button content prev-btn">
                                     <span>Previous</span>
                                     </button>
                                 </a>
-                                </div>
                             </div>
                             <div class="mchat-buttons-container mchat-buttons-root-class-name22">
                                 <a href="/quizz">
                                     <button type="submit" class="mchat-buttons-button content next-btn">
                                         <span>Next</span>
                                         </button>
-                                    </a>
+                                </a>
                             </div>
-                            <span class="mchat-survey-text037"> © 2009 Diana Robins, Deborah Fein &amp; Marianne Barton</span>
-                        
                         </div>
+                        <span class="mchat-survey-text037">
+                                © 2009 Diana Robins, Deborah Fein &amp; Marianne Barton
+                            </span>
                     </div>
                 </form>
-            
             </div>
         </div>
     </div>
