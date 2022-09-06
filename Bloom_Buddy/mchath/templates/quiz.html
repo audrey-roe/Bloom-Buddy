@@ -133,14 +133,23 @@
         </header>
         <form action="{{ action }}" method="POST">
             {% csrf_token %}
+            {% for q  in questions%}
             <div id="survey-slide-1" class="mchat-survey-container015 step">
                 <div class="mchat-survey-container016">
+                    <label for="question">1. {{q.question}}</label>
                     <div class="mchat-survey-container017">
-                        <span class="mchat-survey-text038">
+                        <div class="form-check">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{q.question}}" id="gridRadios1" value="option1" checked>
+                                <label class="form-check-label" for="gridRadios1">
+                                 {{q.op1}}
+                                </label>
+                            </div>
+                        <!-- <span class="mchat-survey-text038">
                         1. Does your child enjoy being swung, bounced on your knee,
                         etc.?
-                      </span>
-                        <div class="mchat-survey-container018">
+                        </span> -->
+                        <!-- <div class="mchat-survey-container018">
                             <div class="selector">
                                 <input type="radio" id="1y" name="q1" value="yes" />
                                 <label for="1y" class="mchat-survey-text039">Yes</label>
@@ -150,7 +159,7 @@
                                 <label for="1n" class="mchat-survey-text040">No</label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mchat-survey-container021">
                         <span class="mchat-survey-text041">
                         2. Does your child take an interest in other children?
@@ -198,22 +207,25 @@
                     </div>
                 </div>
                 <div class="mchat-survey-container033">
+                    
                     <div class="mchat-buttons-container mchat-buttons-root-class-name23">
-                        <button class="mchat-buttons-button content">
-                        <span>Previous</span>
-                      </button>
+                        <a href="/instruction">
+                            <button class="mchat-buttons-button content">
+                                <span>Previous</span>
+                            </button>
+                        </a>
                     </div>
-                    <a href="#survey-slide-2" class="mchat-survey-link1">
-                        <div class="mchat-buttons-container mchat-buttons-root-class-name24">
-                            <button class="mchat-buttons-button content next-btn" id="#btnNext1">
-                          <span>Next</span>
-                        </button>
-                        </div>
-                    </a>
+                    <div class="mchat-buttons-container mchat-buttons-root-class-name24">
+                        <a href="#survey-slide-2" class="mchat-survey-link1"></a>
+                            <button class="mchat-buttons-button content next-btn" id="#btnNext">
+                                <span>Next</span>
+                            </button>
+                        </a>
+                    </div>
                 </div>
                 <span class="mchat-survey-text050">
                     © 2009 Diana Robins, Deborah Fein &amp; Marianne Barton
-                  </span>
+                </span>
             </div>
             <div id="survey-slide-2" class="mchat-survey-container034 step">
                 <div class="mchat-survey-container035">
@@ -308,7 +320,7 @@
                         <span class="mchat-survey-text064">
                         9. Does your child ever bring objects over to you (parent) to
                         show you something?
-                      </span>
+                        </span>
                         <div class="mchat-survey-container056">
                             <div class="selector">
                                 <input type="radio" id="9y" name="q9" value="yes" />
@@ -599,6 +611,7 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
                 <div class="mchat-survey-container124">
                     <div class="mchat-buttons-container mchat-buttons-root-class-name33">
                         <button type="submit" class="mchat-buttons-button content">
@@ -607,8 +620,8 @@
                     </div>
                     <div class="mchat-buttons-container mchat-buttons-root-class-name34">
                         <button type="submit" class="mchat-buttons-button content">
-                        <span>Submit</span>
-                      </button>
+                            <span>Submit</span>
+                        </button>
                     </div>
                 </div>
                 <span class="mchat-survey-text112">

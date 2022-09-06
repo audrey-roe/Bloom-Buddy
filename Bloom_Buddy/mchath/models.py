@@ -10,18 +10,20 @@ class customer(models.Model):
     relation_to_child = models.CharField(max_length= 200)
     caregiver_email = models.EmailField( max_length=50)
     caregiver_phone = models.BigIntegerField()
-    date = models.DateField(auto_now_add=True, )
+    date = models.DateField(auto_now_add=True, null=True)
     score = models.IntegerField()
     USERNAME_FIELD = 'username'
 
 
     def __str__(self):
-        return self.child_name
+        return self.caregiver_name
 
 
 class quiz(models.Model):
-    question = models.CharField(max_length=200,null=True)
-    ans = models.BooleanField(max_length=200, null=True)
+    question = models.CharField(max_length=200, null=True)
+    op1 = models.CharField(max_length=200, null=True)
+    op2 = models.CharField(max_length=200, null=True)
+    ans = models.CharField(max_length=200, null=True)
     
     def __str__(self):
         return f"Question: {self.question} Ans: {self.ans}"

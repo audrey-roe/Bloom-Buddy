@@ -64,16 +64,11 @@ def quizz(request):
             # 'total':total,
             'score': score
         }
-        return render(
-            request,
-            'quiz.html',
-            context
-            )
+        return render(request, 'mchat-results-page.html', context)
     else:
         questions=quiz.objects.all()
         context = {
             'questions':questions
         }
     
-    return render(request, 'mchat-results-page.html', context)
-
+    return render(request, 'quiz.html', context)
