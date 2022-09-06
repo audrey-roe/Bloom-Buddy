@@ -23,7 +23,7 @@ def registerPage(request):
     if request.method == 'POST':     
         customer.objects.create(
                 caregiver_name = request.POST['caregiver_name'],
-                child_age = request.POST['child_age'],
+                child_age = request.POST['child_age'].replace(' Months',''),
                 child_name = request.POST['child_name'],
                 caregiver_email = request.POST['caregiver_email'],
                 caregiver_phone = int(f"234{(request.POST['phone'].replace('+','')).replace('234234','').replace('234','')}"),
@@ -31,7 +31,7 @@ def registerPage(request):
 
         return redirect(quizz)
     else:
-        raise Http404
+        return render(request, 'signinfo.html')
 
 def mchat(request):
     return render(request, 'mchat-survey.html')
