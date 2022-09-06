@@ -2,21 +2,36 @@
 from django.http import Http404
 from django.shortcuts import redirect,render
 from django.contrib.auth import login,logout,authenticate
-from .forms import createuserform, quizform
+from .forms import createcustomerform, quizform
 from .models import quiz, customer
 from django.http import HttpResponse
 
 # Create your views here.
 
+# def registerPage(request):
+#     if request.POST:
+#         form = createcustomerform(request.POST, request.FILES)
+#         print = (request.FILES)
+#         if form.is_valid():
+#           form.save()
+#         else :
+#             raise Http404
+#         # return redirect(quizz)
+#     context = {'form': form}
+#     return render(request, 'signinfo.html', context)
 def registerPage(request):
-    if request.POST:
-        form = createuserform(request.POST, request.FILES)
-        print = (request.FILES)
-        if form.is_valid():
-            form.save()
+    if request.method == 'POST':     
+        customer.objects.create(
+                caregiver_name = request.POST['caregiver_name'],
+                child_age = request.POST['child_age'],
+                child_name = request.POST['child_name'],
+                caregiver_email = request.POST['caregiver_email'],
+                caregiver_phone = int(f"234{(request.POST['phone'].replace('+','')).replace('234234','').replace('234','')}"),
+                date = request.POST['date'],)
+
         return redirect(quizz)
-    return render(request, 'signinfo.html', { 'form': createuserform})
-              
+    else:
+        raise Http404
 
 def mchat(request):
     return render(request, 'mchat-survey.html')
@@ -25,7 +40,7 @@ def instruction(request):
     return render(request, 'instruction.html')
 
 def quizz(request):
-    if request.method == 'POST':
+    if request.POST:
         print(request.POST)
         questions=quiz.objects.all()
         score = 0
@@ -48,7 +63,7 @@ def quizz(request):
         }
         return render(
             request,
-            'quiz.html',
+            'mchat-results-page.html',
             context
             )
     else:
@@ -57,5 +72,5 @@ def quizz(request):
             'questions':questions
         }
     
-    return render(request, 'mchat-results-page.html', context)
+    return render(request, 'quiz.html', context)
 

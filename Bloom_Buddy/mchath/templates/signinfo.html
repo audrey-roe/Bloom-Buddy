@@ -72,10 +72,10 @@
                     class="logo mchat-header-darklogotransparentstraightline-copy"
                     />
                     </header>
-                    <form method="POST" action="{% url 'registerPage'%}" enctype="multipart/form-data" >
-                    {% csrf_token %}
-                    <div id="info-form" class="mchat-survey-container005 step">
-                        <h1 class="h3">Please, tell us a bit about yourself</h1>
+                    <form method="post" action="/registerPage/"  enctype="multipart/form-data" >
+                        {%csrf_token%}
+                        <div id="info-form" class="mchat-survey-container005 step">
+                            <h1 class="h3">Please, tell us a bit about yourself</h1>
 
                             <div class="mchat-survey-container006">
                                 <!-- {{form.as_p}} -->
@@ -205,8 +205,8 @@
                             <span class="mchat-survey-text037">
                                 © 2009 Diana Robins, Deborah Fein &amp; Marianne Barton
                             </span>
-                    </div>
-                </form>
+                        </div>
+                    </form>
             </div>
         </div>
         </div>
