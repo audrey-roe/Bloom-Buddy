@@ -1,0 +1,11 @@
+django==4.1
+django_channels==3.0.5  #python -m pip install -U channels
+pillow==9.2.0
+djangorestframework==3.13.1
+knox==0.1.14
+django-ckeditor==6.5.0
+django-autoslug==1.9.8
+# django-widget-tweaks==1.4.8
+psycopg2==2.8.6
+# xhtml2pdf==0.2.5
+#pip install -r requirements.txt
