@@ -1,0 +1,16 @@
+django==4.1
+psycopg2-binary==2.8.6
+xhtml2pdf==0.2.5
+# for chatbot
+torch==1.12.1
+torchvision==0.13.1
+torchaudio==0.12.1
+nltk==3.7
+#for lms
+django-autoslug==1.9.8
+django-ckeditor==6.5.1
+
+# pip install django-crispy-forms
+
+
+#pip install -r requirements.txt
